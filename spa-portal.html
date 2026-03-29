@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Briella Health — Provider Dashboard</title>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+  <style>
+    body { background: var(--bg-dark); }
+    .patients-table { width: 100%; border-collapse: collapse; }
+    .patients-table th { font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--gray-500); padding: 12px 16px; text-align: left; border-bottom: 1px solid var(--border); }
+    .patients-table td { padding: 14px 16px; border-bottom: 1px solid var(--border); font-size: 0.85rem; color: var(--gray-300); vertical-align: middle; }
+    .patients-table tr:last-child td { border-bottom: none; }
+    .patients-table tr:hover td { background: var(--bg-card-hover); }
+    .patient-name { font-weight: 600; color: var(--white); }
+    .patient-initials { width: 32px; height: 32px; border-radius: 50%; background: var(--teal-dim); border: 1px solid var(--teal-border); display: inline-flex; align-items: center; justify-content: center; font-size: 0.72rem; font-weight: 700; color: var(--teal); margin-right: 10px; }
+    .flag-count { font-size: 0.72rem; font-weight: 700; }
+    .flag-count.red { color: #ef4444; }
+    .flag-count.yellow { color: #f59e0b; }
+    .flag-count.green { color: #22c55e; }
+    .activity-item { display: flex; gap: 14px; padding: 12px 0; border-bottom: 1px solid var(--border); align-items: flex-start; }
+    .activity-item:last-child { border-bottom: none; }
+    .activity-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--teal); flex-shrink: 0; margin-top: 6px; }
+    .tab-bar { display: flex; gap: 4px; margin-bottom: 24px; background: var(--bg-card); border: 1px solid var(--border); border-radius: 8px; padding: 4px; width: fit-content; }
+    .tab-btn { padding: 7px 18px; border-radius: 6px; font-size: 0.82rem; font-weight: 600; border: none; background: none; color: var(--gray-400); cursor: pointer; transition: all 0.15s; }
+    .tab-btn.active { background: var(--teal-dim); color: var(--teal); }
+  </style>
+</head>
+<body>
+
+<!-- PORTAL NAV -->
+<nav class="portal-nav">
+  <div class="portal-nav-left">
+    <a href="index.html" class="nav-logo" style="font-size:0.95rem;">
+      <div class="logo-mark" style="width:28px;height:28px;font-size:12px;">B</div>
+      Briella <span style="color:var(--teal);">Health</span>
+    </a>
+    <span class="portal-badge" style="background:rgba(212,168,83,0.12);color:var(--gold);border-color:rgba(212,168,83,0.3);">Provider Portal</span>
+  </div>
+  <div class="portal-nav-right">
+    <span style="font-size:0.82rem;color:var(--gray-400);">Elite Med Spa — Austin</span>
+    <div class="portal-avatar" style="background:var(--gold);color:#111;">E</div>
+  </div>
+</nav>
+
+<div class="portal-body">
+<!-- SIDEBAR -->
+<aside class="portal-sidebar">
+  <div class="sidebar-label">Overview</div>
+  <a href="#" class="sidebar-link active"><span class="sl-icon">📊</span> Dashboard</a>
+  <a href="#" class="sidebar-link"><span class="sl-icon">👥</span> All Patients</a>
+  <a href="#" class="sidebar-link"><span class="sl-icon">🚩</span> Flagged Results</a>
+  <a href="#" class="sidebar-link"><span class="sl-icon">📈</span> Analytics</a>
+  <div class="sidebar-label">Labs</div>
+  <a href="#" class="sidebar-link"><span class="sl-icon">⏳</span> Pending Draw</a>
+  <a href="#" class="sidebar-link"><span class="sl-icon">✅</span> Completed Panels</a>
+  <a href="#" class="sidebar-link"><span class="sl-icon">📋</span> Lab Orders</a>
+  <div class="sidebar-label">Business</div>
+  <a href="#" class="sidebar-link"><span class="sl-icon">💰</span> Revenue</a>
+  <a href="#" class="sidebar-link"><span class="sl-icon">🔗</span> Affiliate Link</a>
+  <a href="#" class="sidebar-link"><span class="sl-icon">⚙️</span> Settings</a>
+  <a href="index.html" class="sidebar-link"><span class="sl-icon">↩</span> Sign Out</a>
+</aside>
+
+<!-- MAIN -->
+<main class="portal-main">
+
+  <!-- HEADER -->
+  <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:28px;flex-wrap:wrap;gap:14px;">
+    <div>
+      <h2 style="font-size:1.4rem;margin-bottom:4px;">Provider Dashboard</h2>
+      <p style="color:var(--gray-400);font-size:0.82rem;">Elite Med Spa — Austin, TX · <strong style="color:var(--white);">March 29, 2026</strong></p>
+    </div>
+    <div style="display:flex;gap:10px;">
+      <a href="#" class="btn btn-ghost" style="font-size:0.82rem;padding:9px 18px;">📋 Lab Orders</a>
+      <a href="#" class="btn btn-primary" style="font-size:0.82rem;padding:9px 18px;">+ Invite Patient</a>
+    </div>
+  </div>
+
+  <!-- STAT CARDS -->
+  <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:18px;margin-bottom:28px;">
+    <div class="stat-card">
+      <div class="stat-card-value">24</div>
+      <div class="stat-card-label">Active members</div>
+      <div class="stat-card-delta delta-up">↑ 4 this month</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-card-value" style="color:#f59e0b;">6</div>
+      <div class="stat-card-label">Panels pending draw</div>
+      <div class="stat-card-delta" style="color:var(--gray-500);">Ordered this week</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-card-value" style="color:#ef4444;">3</div>
+      <div class="stat-card-label">Flagged results</div>
+      <div class="stat-card-delta" style="color:var(--gray-500);">Require review</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-card-value" style="color:var(--gold);">$1,752</div>
+      <div class="stat-card-label">Revenue this month</div>
+      <div class="stat-card-delta delta-up">↑ $438 vs. prior month</div>
+    </div>
+  </div>
+
+  <div style="display:grid;grid-template-columns:2fr 1fr;gap:24px;margin-bottom:24px;">
+
+    <!-- PATIENT TABLE -->
+    <div style="background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius-lg);overflow:hidden;">
+      <div style="padding:20px 24px;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;">
+        <h3 style="font-size:0.95rem;">Recent Patient Results</h3>
+        <div class="tab-bar">
+          <button class="tab-btn active" onclick="setTab('all',this)">All</button>
+          <button class="tab-btn" onclick="setTab('flagged',this)">Flagged</button>
+          <button class="tab-btn" onclick="setTab('pending',this)">Pending</button>
+        </div>
+      </div>
+      <table class="patients-table">
+        <thead>
+          <tr>
+            <th>Patient</th>
+            <th>Panel Date</th>
+            <th>Status</th>
+            <th>Flags</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><span class="patient-initials">SM</span><span class="patient-name">Sarah M.</span></td>
+            <td>Mar 12, 2026</td>
+            <td><span class="status-pill status-flag">1 Flagged</span></td>
+            <td><span class="flag-count red">Ferritin Low</span></td>
+            <td><a href="patient-portal.html" style="color:var(--teal);font-size:0.78rem;font-weight:600;">View Results →</a></td>
+          </tr>
+          <tr>
+            <td><span class="patient-initials">JT</span><span class="patient-name">James T.</span></td>
+            <td>Mar 28, 2026</td>
+            <td><span class="status-pill status-optimal">All Optimal</span></td>
+            <td><span class="flag-count green">None</span></td>
+            <td><a href="#" style="color:var(--teal);font-size:0.78rem;font-weight:600;">View Results →</a></td>
+          </tr>
+          <tr>
+            <td><span class="patient-initials">RK</span><span class="patient-name">Rachel K.</span></td>
+            <td>—</td>
+            <td><span class="status-pill status-pending">Pending Draw</span></td>
+            <td><span class="flag-count" style="color:var(--gray-500);">—</span></td>
+            <td><a href="#" style="color:var(--gray-500);font-size:0.78rem;">Awaiting</a></td>
+          </tr>
+          <tr>
+            <td><span class="patient-initials">MB</span><span class="patient-name">Marcus B.</span></td>
+            <td>Mar 20, 2026</td>
+            <td><span class="status-pill status-borderline">2 Watching</span></td>
+            <td><span class="flag-count yellow">Homocysteine, hs-CRP</span></td>
+            <td><a href="#" style="color:var(--teal);font-size:0.78rem;font-weight:600;">View Results →</a></td>
+          </tr>
+          <tr>
+            <td><span class="patient-initials">AL</span><span class="patient-name">Amanda L.</span></td>
+            <td>—</td>
+            <td><span class="status-pill status-pending">Pending Draw</span></td>
+            <td><span class="flag-count" style="color:var(--gray-500);">—</span></td>
+            <td><a href="#" style="color:var(--gray-500);font-size:0.78rem;">Awaiting</a></td>
+          </tr>
+          <tr>
+            <td><span class="patient-initials">DR</span><span class="patient-name">David R.</span></td>
+            <td>Mar 10, 2026</td>
+            <td><span class="status-pill status-flag">2 Flagged</span></td>
+            <td><span class="flag-count red">ApoB, Insulin</span></td>
+            <td><a href="#" style="color:var(--teal);font-size:0.78rem;font-weight:600;">View Results →</a></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- RIGHT COLUMN -->
+    <div style="display:flex;flex-direction:column;gap:20px;">
+
+      <!-- REVENUE CHART -->
+      <div style="background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius-lg);padding:22px;">
+        <div style="font-size:0.88rem;font-weight:700;margin-bottom:4px;">Monthly Revenue</div>
+        <div style="font-size:0.72rem;color:var(--gray-500);margin-bottom:18px;">20% revenue share · Last 6 months</div>
+        <canvas id="revenueChart" height="140"></canvas>
+      </div>
+
+      <!-- ACTIVITY FEED -->
+      <div style="background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius-lg);padding:22px;flex:1;">
+        <div style="font-size:0.88rem;font-weight:700;margin-bottom:16px;">Recent Activity</div>
+        <div class="activity-item">
+          <div class="activity-dot" style="background:#22c55e;"></div>
+          <div><div style="font-size:0.82rem;font-weight:600;color:var(--white);">James T. — panel complete</div><div style="font-size:0.75rem;color:var(--gray-500);">Today, 9:14 AM · All 68 markers optimal</div></div>
+        </div>
+        <div class="activity-item">
+          <div class="activity-dot" style="background:#ef4444;"></div>
+          <div><div style="font-size:0.82rem;font-weight:600;color:var(--white);">Sarah M. — result flagged</div><div style="font-size:0.75rem;color:var(--gray-500);">Today, 8:02 AM · Ferritin low (18 ng/mL)</div></div>
+        </div>
+        <div class="activity-item">
+          <div class="activity-dot"></div>
+          <div><div style="font-size:0.82rem;font-weight:600;color:var(--white);">Rachel K. — membership activated</div><div style="font-size:0.75rem;color:var(--gray-500);">Yesterday · Lab order sent to Quest</div></div>
+        </div>
+        <div class="activity-item">
+          <div class="activity-dot"></div>
+          <div><div style="font-size:0.82rem;font-weight:600;color:var(--white);">Amanda L. — membership activated</div><div style="font-size:0.75rem;color:var(--gray-500);">Mar 27 · Awaiting draw appointment</div></div>
+        </div>
+        <div class="activity-item">
+          <div class="activity-dot" style="background:var(--gold);"></div>
+          <div><div style="font-size:0.82rem;font-weight:600;color:var(--white);">Revenue payout processed</div><div style="font-size:0.75rem;color:var(--gray-500);">Mar 1 · $1,314 deposited</div></div>
+        </div>
+      </div>
+
+      <!-- AFFILIATE LINK -->
+      <div style="background:var(--teal-dim);border:1px solid var(--teal-border);border-radius:var(--radius);padding:18px;">
+        <div style="font-size:0.78rem;font-weight:700;color:var(--teal);margin-bottom:6px;">Your Affiliate Link</div>
+        <div style="font-size:0.75rem;color:var(--gray-300);word-break:break-all;margin-bottom:10px;">briellahealth.com/elitemedspa-austin</div>
+        <button onclick="copyLink()" style="font-size:0.75rem;font-weight:700;color:var(--teal);background:none;border:1px solid var(--teal-border);border-radius:4px;padding:4px 12px;cursor:pointer;" id="copyBtn">Copy Link</button>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- MEMBERSHIP GROWTH CHART -->
+  <div style="background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius-lg);padding:28px;">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;">
+      <div>
+        <div style="font-size:0.95rem;font-weight:700;margin-bottom:4px;">Membership Growth</div>
+        <div style="font-size:0.75rem;color:var(--gray-500);">Active members over time</div>
+      </div>
+    </div>
+    <canvas id="growthChart" height="70"></canvas>
+  </div>
+
+</main>
+</div>
+
+<script>
+const chartOpts = {
+  responsive:true, maintainAspectRatio:true,
+  plugins:{ legend:{display:false}, tooltip:{backgroundColor:'#111f2e',borderColor:'rgba(255,255,255,0.1)',borderWidth:1,titleColor:'#fff',bodyColor:'#9ca3af',padding:10} },
+  scales:{ x:{grid:{color:'rgba(255,255,255,0.04)'},ticks:{color:'#6b7280',font:{size:10}}}, y:{grid:{color:'rgba(255,255,255,0.04)'},ticks:{color:'#6b7280',font:{size:10}}} }
+};
+
+new Chart(document.getElementById('revenueChart'),{
+  type:'bar',
+  data:{ labels:['Oct','Nov','Dec','Jan','Feb','Mar'], datasets:[{data:[548,730,876,1095,1314,1752],backgroundColor:'rgba(212,168,83,0.5)',borderColor:'#d4a853',borderWidth:1,borderRadius:4}] },
+  options:chartOpts
+});
+
+new Chart(document.getElementById('growthChart'),{
+  type:'line',
+  data:{
+    labels:['Oct 2025','Nov 2025','Dec 2025','Jan 2026','Feb 2026','Mar 2026'],
+    datasets:[{label:'Active Members',data:[6,10,14,17,20,24],borderColor:'#0d9488',backgroundColor:'rgba(13,148,136,0.08)',tension:0.4,fill:true,pointBackgroundColor:'#0d9488',pointRadius:5}]
+  },
+  options:chartOpts
+});
+
+function setTab(tab, el) {
+  document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+  el.classList.add('active');
+}
+
+function copyLink() {
+  const btn = document.getElementById('copyBtn');
+  btn.textContent = 'Copied!';
+  setTimeout(()=>btn.textContent='Copy Link', 2000);
+}
+</script>
+</body>
+</html>

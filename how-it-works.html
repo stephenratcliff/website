@@ -272,5 +272,31 @@
   }, { threshold: 0.1 });
   document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
 </script>
+
+<!-- LOGIN MODAL -->
+<div class="login-modal-overlay" id="loginModal" onclick="if(event.target===this)closeLoginModal()">
+  <div class="login-modal">
+    <button class="login-modal-close" onclick="closeLoginModal()">&#215;</button>
+    <h3>Welcome back</h3>
+    <p class="login-subtitle">Sign in to your Briella Health account</p>
+    <div class="login-options">
+      <a href="patient-portal.html" class="login-option">
+        <div class="login-option-icon">🧬</div>
+        <div><h4>I'm a Patient</h4><p>View your lab results, biomarker trends, and health insights</p></div>
+      </a>
+      <div class="login-divider">or</div>
+      <a href="spa-portal.html" class="login-option">
+        <div class="login-option-icon">🏥</div>
+        <div><h4>I'm a Provider / Med Spa</h4><p>Manage your patients and view their lab results</p></div>
+      </a>
+    </div>
+  </div>
+</div>
+<script>
+function openLoginModal() { document.getElementById('loginModal').classList.add('open'); document.body.style.overflow='hidden'; }
+function closeLoginModal() { document.getElementById('loginModal').classList.remove('open'); document.body.style.overflow=''; }
+document.addEventListener('keydown', e => { if(e.key==='Escape') closeLoginModal(); });
+<\/script>
+
 </body>
 </html>

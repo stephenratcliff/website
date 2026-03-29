@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Briella Health — Patient Portal</title>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+  <style>
+    body { background: var(--bg-dark); }
+    .portal-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: 20px; margin-bottom: 32px; }
+    .bm-result-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius); padding: 20px; }
+    .bm-result-card.optimal { border-color: rgba(34,197,94,0.3); }
+    .bm-result-card.borderline { border-color: rgba(245,158,11,0.3); }
+    .bm-result-card.flag { border-color: rgba(239,68,68,0.3); }
+    .bm-result-name { font-size: 0.72rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--gray-500); margin-bottom: 8px; }
+    .bm-result-value { font-size: 1.6rem; font-weight: 800; font-family: var(--font-heading); color: var(--white); line-height: 1; margin-bottom: 4px; }
+    .bm-result-unit { font-size: 0.72rem; color: var(--gray-500); margin-bottom: 10px; }
+    .bm-result-bar { height: 4px; background: var(--bg-light); border-radius: 2px; margin: 10px 0; position: relative; }
+    .bm-result-bar-fill { height: 100%; border-radius: 2px; }
+    .bm-result-bar-fill.optimal { background: #22c55e; }
+    .bm-result-bar-fill.borderline { background: #f59e0b; }
+    .bm-result-bar-fill.flag { background: #ef4444; }
+    .chart-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 28px; margin-bottom: 24px; }
+    .chart-card-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 24px; }
+    .chart-card h3 { font-size: 1rem; margin-bottom: 4px; }
+    .chart-card .chart-subtitle { font-size: 0.78rem; color: var(--gray-400); }
+    .report-section { background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 28px; margin-bottom: 24px; }
+    .report-section h3 { font-size: 1rem; margin-bottom: 16px; padding-bottom: 12px; border-bottom: 1px solid var(--border); }
+    .insight-item { display: flex; gap: 14px; padding: 14px 0; border-bottom: 1px solid var(--border); }
+    .insight-item:last-child { border-bottom: none; padding-bottom: 0; }
+    .insight-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; margin-top: 6px; }
+    .insight-dot.optimal { background: #22c55e; }
+    .insight-dot.borderline { background: #f59e0b; }
+    .insight-dot.flag { background: #ef4444; }
+    .insight-text h4 { font-size: 0.88rem; margin-bottom: 4px; }
+    .insight-text p { font-size: 0.8rem; color: var(--gray-400); }
+    @media(max-width:900px){ .portal-grid{grid-template-columns:repeat(2,1fr);} }
+    @media(max-width:480px){ .portal-grid{grid-template-columns:1fr;} }
+  </style>
+</head>
+<body>
+
+<!-- PORTAL NAV -->
+<nav class="portal-nav">
+  <div class="portal-nav-left">
+    <a href="index.html" class="nav-logo" style="font-size:0.95rem;">
+      <div class="logo-mark" style="width:28px;height:28px;font-size:12px;">B</div>
+      Briella <span style="color:var(--teal);">Health</span>
+    </a>
+    <span class="portal-badge">Patient Portal</span>
+  </div>
+  <div class="portal-nav-right">
+    <span style="font-size:0.82rem;color:var(--gray-400);">Sarah M.</span>
+    <div class="portal-avatar">SM</div>
+  </div>
+</nav>
+
+<!-- SIDEBAR -->
+<div class="portal-body">
+<aside class="portal-sidebar">
+  <div class="sidebar-label">Overview</div>
+  <a href="#" class="sidebar-link active"><span class="sl-icon">📊</span> Dashboard</a>
+  <a href="#" class="sidebar-link"><span class="sl-icon">🧬</span> My Results</a>
+  <a href="#" class="sidebar-link"><span class="sl-icon">📈</span> Trends</a>
+  <a href="#" class="sidebar-link"><span class="sl-icon">📋</span> Health Report</a>
+  <div class="sidebar-label">Labs</div>
+  <a href="#" class="sidebar-link"><span class="sl-icon">🔬</span> Order Lab Panel</a>
+  <a href="#" class="sidebar-link"><span class="sl-icon">📍</span> Find Draw Site</a>
+  <a href="#" class="sidebar-link"><span class="sl-icon">📅</span> Lab History</a>
+  <div class="sidebar-label">Account</div>
+  <a href="#" class="sidebar-link"><span class="sl-icon">⚙️</span> Settings</a>
+  <a href="index.html" class="sidebar-link"><span class="sl-icon">↩</span> Sign Out</a>
+</aside>
+
+<!-- MAIN CONTENT -->
+<main class="portal-main">
+
+  <!-- HEADER -->
+  <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:32px;flex-wrap:wrap;gap:16px;">
+    <div>
+      <h2 style="font-size:1.5rem;margin-bottom:4px;">Good morning, Sarah.</h2>
+      <p style="color:var(--gray-400);font-size:0.85rem;">Your last panel was drawn <strong style="color:var(--white);">March 12, 2026</strong> · Results complete</p>
+    </div>
+    <a href="#" class="btn btn-primary">Order Next Panel</a>
+  </div>
+
+  <!-- SUMMARY STATS -->
+  <div class="portal-grid" style="grid-template-columns:repeat(4,1fr);margin-bottom:28px;">
+    <div class="stat-card">
+      <div class="stat-card-value" style="color:var(--teal);">84<span style="font-size:1rem;font-weight:500;color:var(--gray-400)">/100</span></div>
+      <div class="stat-card-label">Briella Health Score</div>
+      <div class="stat-card-delta delta-up">↑ 6 pts from last year</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-card-value">67</div>
+      <div class="stat-card-label">Biomarkers in optimal range</div>
+      <div class="stat-card-delta delta-up">↑ 8 from prior panel</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-card-value" style="color:#f59e0b;">4</div>
+      <div class="stat-card-label">Markers to watch</div>
+      <div class="stat-card-delta" style="color:var(--gray-500);">Same as prior panel</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-card-value" style="color:#ef4444;">1</div>
+      <div class="stat-card-label">Markers out of optimal</div>
+      <div class="stat-card-delta delta-up">↓ 2 from prior panel</div>
+    </div>
+  </div>
+
+  <!-- KEY BIOMARKER RESULTS -->
+  <div class="chart-card">
+    <div class="chart-card-header">
+      <div>
+        <h3>Key Biomarker Results — March 2026</h3>
+        <p class="chart-subtitle">Click any card to view historical trend</p>
+      </div>
+      <a href="biomarkers.html" style="font-size:0.78rem;color:var(--teal);">View all 68 markers →</a>
+    </div>
+    <div class="portal-grid">
+      <div class="bm-result-card optimal">
+        <div class="bm-result-name">Vitamin D</div>
+        <div class="bm-result-value">71</div>
+        <div class="bm-result-unit">ng/mL</div>
+        <div class="bm-result-bar"><div class="bm-result-bar-fill optimal" style="width:71%"></div></div>
+        <span class="status-pill status-optimal">Optimal</span>
+      </div>
+      <div class="bm-result-card borderline">
+        <div class="bm-result-name">hs-CRP</div>
+        <div class="bm-result-value">2.1</div>
+        <div class="bm-result-unit">mg/L</div>
+        <div class="bm-result-bar"><div class="bm-result-bar-fill borderline" style="width:55%"></div></div>
+        <span class="status-pill status-borderline">Watch</span>
+      </div>
+      <div class="bm-result-card optimal">
+        <div class="bm-result-name">Fasting Glucose</div>
+        <div class="bm-result-value">82</div>
+        <div class="bm-result-unit">mg/dL</div>
+        <div class="bm-result-bar"><div class="bm-result-bar-fill optimal" style="width:68%"></div></div>
+        <span class="status-pill status-optimal">Optimal</span>
+      </div>
+      <div class="bm-result-card flag">
+        <div class="bm-result-name">Ferritin</div>
+        <div class="bm-result-value">18</div>
+        <div class="bm-result-unit">ng/mL</div>
+        <div class="bm-result-bar"><div class="bm-result-bar-fill flag" style="width:18%"></div></div>
+        <span class="status-pill status-flag">Low</span>
+      </div>
+      <div class="bm-result-card optimal">
+        <div class="bm-result-name">TSH</div>
+        <div class="bm-result-value">1.6</div>
+        <div class="bm-result-unit">mIU/L</div>
+        <div class="bm-result-bar"><div class="bm-result-bar-fill optimal" style="width:65%"></div></div>
+        <span class="status-pill status-optimal">Optimal</span>
+      </div>
+      <div class="bm-result-card optimal">
+        <div class="bm-result-name">Free T3</div>
+        <div class="bm-result-value">3.6</div>
+        <div class="bm-result-unit">pg/mL</div>
+        <div class="bm-result-bar"><div class="bm-result-bar-fill optimal" style="width:72%"></div></div>
+        <span class="status-pill status-optimal">Optimal</span>
+      </div>
+      <div class="bm-result-card optimal">
+        <div class="bm-result-name">HbA1c</div>
+        <div class="bm-result-value">5.1</div>
+        <div class="bm-result-unit">%</div>
+        <div class="bm-result-bar"><div class="bm-result-bar-fill optimal" style="width:62%"></div></div>
+        <span class="status-pill status-optimal">Optimal</span>
+      </div>
+      <div class="bm-result-card borderline">
+        <div class="bm-result-name">Homocysteine</div>
+        <div class="bm-result-value">9.2</div>
+        <div class="bm-result-unit">µmol/L</div>
+        <div class="bm-result-bar"><div class="bm-result-bar-fill borderline" style="width:52%"></div></div>
+        <span class="status-pill status-borderline">Watch</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- LONGITUDINAL CHART -->
+  <div class="chart-card">
+    <div class="chart-card-header">
+      <div>
+        <h3>Biomarker Trends — 3-Year View</h3>
+        <p class="chart-subtitle">Vitamin D · hs-CRP · Ferritin over time</p>
+      </div>
+      <div style="display:flex;gap:16px;font-size:0.75rem;">
+        <span style="color:#22c55e;">● Vitamin D</span>
+        <span style="color:var(--teal);">● hs-CRP</span>
+        <span style="color:var(--gold);">● Ferritin</span>
+      </div>
+    </div>
+    <canvas id="trendChart" height="100"></canvas>
+  </div>
+
+  <!-- HORMONE PANEL CHART -->
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-bottom:24px;">
+    <div class="chart-card" style="margin-bottom:0;">
+      <div class="chart-card-header">
+        <div><h3>Thyroid Panel</h3><p class="chart-subtitle">TSH · Free T3 · Free T4</p></div>
+      </div>
+      <canvas id="thyroidChart" height="160"></canvas>
+    </div>
+    <div class="chart-card" style="margin-bottom:0;">
+      <div class="chart-card-header">
+        <div><h3>Metabolic Panel</h3><p class="chart-subtitle">Fasting Glucose · HbA1c · Insulin</p></div>
+      </div>
+      <canvas id="metabolicChart" height="160"></canvas>
+    </div>
+  </div>
+
+  <!-- HEALTH INSIGHTS -->
+  <div class="report-section">
+    <h3>💡 Physician Insights — March 2026</h3>
+    <div class="insight-item">
+      <div class="insight-dot flag"></div>
+      <div class="insight-text">
+        <h4>Ferritin is low at 18 ng/mL</h4>
+        <p>Your iron storage is below optimal (50–100 ng/mL for women). This level — even though technically within the standard lab range — can cause fatigue, hair shedding, and reduced exercise tolerance. Consider iron supplementation and repeat testing in 90 days.</p>
+      </div>
+    </div>
+    <div class="insight-item">
+      <div class="insight-dot borderline"></div>
+      <div class="insight-text">
+        <h4>hs-CRP trending upward — watch inflammation</h4>
+        <p>Your hs-CRP rose from 1.4 to 2.1 mg/L. While still below the cardiovascular risk threshold of 3.0, this trend suggests increasing systemic inflammation. Diet, sleep quality, and omega-3 intake are the most modifiable factors here.</p>
+      </div>
+    </div>
+    <div class="insight-item">
+      <div class="insight-dot borderline"></div>
+      <div class="insight-text">
+        <h4>Homocysteine slightly elevated at 9.2 µmol/L</h4>
+        <p>Optimal homocysteine is below 8 µmol/L. Yours is mildly elevated — a common finding with marginal B12 or folate intake. Methylated B-complex supplementation typically normalizes this within 60 days.</p>
+      </div>
+    </div>
+    <div class="insight-item">
+      <div class="insight-dot optimal"></div>
+      <div class="insight-text">
+        <h4>Thyroid function excellent — TSH, Free T3, Free T4 all optimal</h4>
+        <p>Your full thyroid panel is in excellent shape. TSH of 1.6 with Free T3 at 3.6 pg/mL indicates active conversion and appropriate pituitary signaling. No intervention needed.</p>
+      </div>
+    </div>
+    <div class="insight-item">
+      <div class="insight-dot optimal"></div>
+      <div class="insight-text">
+        <h4>Metabolic health strong — glucose, HbA1c, and insulin all optimal</h4>
+        <p>Fasting glucose of 82 mg/dL and HbA1c of 5.1% are ideal. Your metabolic flexibility appears intact. Continue current dietary patterns and maintain resistance training frequency.</p>
+      </div>
+    </div>
+  </div>
+
+</main>
+</div>
+
+<script>
+const chartDefaults = {
+  plugins: { legend: { display: false }, tooltip: { backgroundColor: '#111f2e', borderColor: 'rgba(255,255,255,0.1)', borderWidth: 1, titleColor: '#fff', bodyColor: '#9ca3af', padding: 12 } },
+  scales: {
+    x: { grid: { color: 'rgba(255,255,255,0.04)' }, ticks: { color: '#6b7280', font: { size: 11 } } },
+    y: { grid: { color: 'rgba(255,255,255,0.04)' }, ticks: { color: '#6b7280', font: { size: 11 } } }
+  },
+  responsive: true, maintainAspectRatio: true
+};
+
+// Longitudinal trend chart
+new Chart(document.getElementById('trendChart'), {
+  type: 'line',
+  data: {
+    labels: ['Mar 2023','Sep 2023','Mar 2024','Sep 2024','Mar 2025','Sep 2025','Mar 2026'],
+    datasets: [
+      { label: 'Vitamin D (ng/mL)', data: [38, 42, 51, 58, 64, 68, 71], borderColor: '#22c55e', backgroundColor: 'rgba(34,197,94,0.08)', tension: 0.4, fill: true, pointBackgroundColor: '#22c55e', pointRadius: 4 },
+      { label: 'hs-CRP (mg/L)', data: [2.8, 2.4, 2.0, 1.6, 1.4, 1.7, 2.1], borderColor: '#0d9488', backgroundColor: 'rgba(13,148,136,0.08)', tension: 0.4, fill: true, pointBackgroundColor: '#0d9488', pointRadius: 4 },
+      { label: 'Ferritin (ng/mL)', data: [45, 38, 32, 28, 22, 20, 18], borderColor: '#d4a853', backgroundColor: 'rgba(212,168,83,0.08)', tension: 0.4, fill: true, pointBackgroundColor: '#d4a853', pointRadius: 4 }
+    ]
+  },
+  options: chartDefaults
+});
+
+// Thyroid panel chart
+new Chart(document.getElementById('thyroidChart'), {
+  type: 'bar',
+  data: {
+    labels: ['Mar 2024','Sep 2024','Mar 2025','Sep 2025','Mar 2026'],
+    datasets: [
+      { label: 'TSH', data: [2.1, 1.9, 1.7, 1.8, 1.6], backgroundColor: 'rgba(13,148,136,0.6)', borderColor: '#0d9488', borderWidth: 1, borderRadius: 4 },
+      { label: 'Free T3', data: [3.2, 3.3, 3.5, 3.4, 3.6], backgroundColor: 'rgba(34,197,94,0.5)', borderColor: '#22c55e', borderWidth: 1, borderRadius: 4 },
+      { label: 'Free T4', data: [1.1, 1.2, 1.3, 1.2, 1.3], backgroundColor: 'rgba(212,168,83,0.5)', borderColor: '#d4a853', borderWidth: 1, borderRadius: 4 }
+    ]
+  },
+  options: { ...chartDefaults, plugins: { ...chartDefaults.plugins, legend: { display: true, labels: { color: '#9ca3af', font: { size: 10 }, boxWidth: 12 } } } }
+});
+
+// Metabolic panel chart
+new Chart(document.getElementById('metabolicChart'), {
+  type: 'line',
+  data: {
+    labels: ['Mar 2024','Sep 2024','Mar 2025','Sep 2025','Mar 2026'],
+    datasets: [
+      { label: 'Fasting Glucose', data: [88, 85, 84, 83, 82], borderColor: '#0d9488', tension: 0.4, pointBackgroundColor: '#0d9488', pointRadius: 4 },
+      { label: 'HbA1c ×10', data: [53, 52, 52, 51, 51], borderColor: '#22c55e', tension: 0.4, pointBackgroundColor: '#22c55e', pointRadius: 4 },
+      { label: 'Fasting Insulin', data: [9, 8, 7, 6, 7], borderColor: '#d4a853', tension: 0.4, pointBackgroundColor: '#d4a853', pointRadius: 4 }
+    ]
+  },
+  options: { ...chartDefaults, plugins: { ...chartDefaults.plugins, legend: { display: true, labels: { color: '#9ca3af', font: { size: 10 }, boxWidth: 12 } } } }
+});
+</script>
+</body>
+</html>

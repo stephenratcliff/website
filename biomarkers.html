@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Briella Health — Biomarker Library</title>
+  <meta name="description" content="Explore the 100+ biomarkers included in every Briella Health membership. Understand what each test measures, why it matters, and what optimal looks like.">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo">
+      <div class="logo-mark">B</div>
+      Briella <span>Health</span>
+    </a>
+    <div class="nav-links" id="navLinks">
+      <a href="how-it-works.html">How It Works</a>
+      <a href="biomarkers.html" class="active">Biomarkers</a>
+      <a href="membership.html">Membership</a>
+      <a href="for-med-spas.html">For Med Spas</a>
+      <button onclick="openLoginModal()" class="btn btn-ghost" style="font-size:0.82rem;padding:8px 16px;">Login</button>
+      <a href="#waitlist" class="btn btn-primary nav-cta">Get Started</a>
+    </div>
+    <button class="nav-toggle" onclick="document.getElementById('navLinks').classList.toggle('open')" aria-label="Menu">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+    </button>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section style="padding: 120px 0 64px; border-bottom: 1px solid var(--border);">
+  <div class="container">
+    <div class="eyebrow">Biomarker Library</div>
+    <h1 style="max-width:700px;margin-bottom:20px;">What we test — and <em style="font-style:normal;color:var(--teal);">why it matters.</em></h1>
+    <p class="lead" style="max-width:620px;margin-bottom:0;">Standard annual physicals check 10–20 markers. Briella Health tests 100+. Every marker below is included in your annual membership — no add-ons, no surprises.</p>
+  </div>
+</section>
+
+<!-- LIBRARY -->
+<section class="section">
+  <div class="container">
+    <div class="search-filter-bar">
+      <input class="search-input" type="text" id="bmSearch" placeholder="Search biomarkers..." oninput="filterBiomarkers()">
+      <div class="filter-tabs" id="filterTabs">
+        <button class="filter-tab active" onclick="setFilter('all',this)">All</button>
+        <button class="filter-tab" onclick="setFilter('cardiovascular',this)">❤️ Cardiovascular</button>
+        <button class="filter-tab" onclick="setFilter('hormones',this)">⚡ Hormones</button>
+        <button class="filter-tab" onclick="setFilter('metabolic',this)">🔥 Metabolic</button>
+        <button class="filter-tab" onclick="setFilter('thyroid',this)">🦋 Thyroid</button>
+        <button class="filter-tab" onclick="setFilter('immune',this)">🛡️ Immune</button>
+        <button class="filter-tab" onclick="setFilter('nutrients',this)">✨ Nutrients</button>
+        <button class="filter-tab" onclick="setFilter('kidney',this)">🫘 Kidney</button>
+        <button class="filter-tab" onclick="setFilter('liver',this)">🩺 Liver</button>
+        <button class="filter-tab" onclick="setFilter('blood',this)">🔬 Blood</button>
+        <button class="filter-tab" onclick="setFilter('cancer',this)">🎗️ Cancer Markers</button>
+      </div>
+    </div>
+    <p class="bm-count-label" id="bmCountLabel">Showing all 68 biomarkers</p>
+    <div class="bm-library-grid" id="bmGrid"></div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="section-sm" style="background:var(--bg-card);border-top:1px solid var(--border);">
+  <div class="container text-center">
+    <div class="eyebrow">Every marker. Every year.</div>
+    <h2 style="margin-bottom:16px;">All 100+ biomarkers.<br>One membership.</h2>
+    <p class="lead" style="margin:0 auto 32px;">$365/year. No hidden fees, no à la carte pricing. Just comprehensive data about your health, annually.</p>
+    <a href="membership.html" class="btn btn-primary btn-lg">View Membership Plans</a>
+  </div>
+</section>
+
+<!-- LOGIN MODAL -->
+<div class="login-modal-overlay" id="loginModal" onclick="if(event.target===this)closeLoginModal()">
+  <div class="login-modal">
+    <button class="login-modal-close" onclick="closeLoginModal()">&#215;</button>
+    <h3>Welcome back</h3>
+    <p class="login-subtitle">Sign in to your Briella Health account</p>
+    <div class="login-options">
+      <a href="patient-portal.html" class="login-option">
+        <div class="login-option-icon">🧬</div>
+        <div><h4>I'm a Patient</h4><p>View your lab results, biomarker trends, and health insights</p></div>
+      </a>
+      <div class="login-divider">or</div>
+      <a href="spa-portal.html" class="login-option">
+        <div class="login-option-icon">🏥</div>
+        <div><h4>I'm a Provider / Med Spa</h4><p>Manage your patients and view their lab results</p></div>
+      </a>
+    </div>
+  </div>
+</div>
+
+<script>
+const biomarkers = [
+  // CARDIOVASCULAR
+  { id:'apoB', name:'ApoB (Apolipoprotein B)', cat:'cardiovascular', icon:'❤️', short:'The most accurate count of atherogenic particles in your blood — a better predictor of cardiac risk than LDL cholesterol alone.', why:'Unlike LDL-C, which measures cholesterol mass, ApoB directly counts every particle capable of depositing plaque. High ApoB predicts cardiovascular events even when standard LDL appears normal. Many cardiologists now consider it the primary lipid target.', std:'Rarely included in standard panels', opt:'< 80 mg/dL (< 60 if high risk)', unit:'mg/dL' },
+  { id:'lpA', name:'Lp(a) — Lipoprotein(a)', cat:'cardiovascular', icon:'❤️', short:'A genetically inherited cardiovascular risk factor that standard lipid panels miss entirely — elevated in 20% of the population.', why:'Lp(a) is an independent risk factor for heart attack, stroke, and aortic valve disease. It is almost entirely determined by genetics, unaffected by diet or most medications. Knowing your level informs lifetime risk and surveillance decisions.', std:'Not included in standard panels', opt:'< 30 mg/dL', unit:'mg/dL' },
+  { id:'hsCRP', name:'hs-CRP (High-Sensitivity CRP)', cat:'cardiovascular', icon:'❤️', short:'A sensitive marker of systemic inflammation that predicts cardiovascular risk independent of cholesterol levels.', why:'Chronic low-grade inflammation is a driver of atherosclerosis, metabolic disease, and many cancers. hs-CRP can identify inflammation before symptoms appear. Levels above 3 mg/L double cardiovascular risk regardless of lipid status.', std:'> 3 mg/L (flagged as elevated)', opt:'< 1.0 mg/L', unit:'mg/L' },
+  { id:'homocysteine', name:'Homocysteine', cat:'cardiovascular', icon:'❤️', short:'An amino acid that, when elevated, damages artery walls and dramatically increases cardiovascular risk — and is correctable with B vitamins.', why:'Elevated homocysteine is an independent risk factor for heart disease, stroke, cognitive decline, and blood clots. It is highly responsive to B12, folate, and B6 supplementation — making it an actionable finding when caught early.', std:'Not included in standard panels', opt:'< 8 µmol/L', unit:'µmol/L' },
+  { id:'totalChol', name:'Total Cholesterol', cat:'cardiovascular', icon:'❤️', short:'A summary measure of all cholesterol fractions — useful context but not the most predictive cardiovascular marker on its own.', why:'Total cholesterol alone has limited predictive value. It is most useful when interpreted alongside HDL, LDL, ApoB, and triglycerides as part of a complete lipid picture. Very low total cholesterol can also indicate malnutrition or liver disease.', std:'< 200 mg/dL', opt:'150–200 mg/dL (context-dependent)', unit:'mg/dL' },
+  { id:'ldl', name:'LDL Cholesterol', cat:'cardiovascular', icon:'❤️', short:'The primary lipid target in cardiovascular risk assessment — though ApoB and particle number tell a more complete story.', why:'LDL transports cholesterol to cells and arterial walls. Persistently elevated LDL accelerates plaque formation. Calculated LDL (Friedewald) can underestimate true risk in high-triglyceride states — direct measurement is more accurate.', std:'< 100 mg/dL (standard), < 70 if high risk', opt:'< 70 mg/dL for optimal cardiovascular health', unit:'mg/dL' },
+  { id:'hdl', name:'HDL Cholesterol', cat:'cardiovascular', icon:'❤️', short:'The "reverse transport" cholesterol that moves lipids away from arteries — higher levels are generally protective.', why:'HDL mediates reverse cholesterol transport, removing lipids from vessel walls. Low HDL (< 40 in men, < 50 in women) is an independent cardiovascular risk factor. However, very high HDL does not always confer additional protection.', std:'> 40 mg/dL (men), > 50 mg/dL (women)', opt:'> 60 mg/dL', unit:'mg/dL' },
+  { id:'trig', name:'Triglycerides', cat:'cardiovascular', icon:'❤️', short:'Blood fats directly influenced by carbohydrate intake, alcohol, and metabolic health — elevated levels signal insulin resistance.', why:'Triglycerides are a sensitive marker of metabolic dysfunction. Levels above 150 mg/dL suggest early insulin resistance. Very high triglycerides (> 500 mg/dL) carry a risk of pancreatitis. The triglyceride-to-HDL ratio is a practical insulin resistance proxy.', std:'< 150 mg/dL', opt:'< 80 mg/dL', unit:'mg/dL' },
+
+  // HORMONES
+  { id:'testTotal', name:'Testosterone (Total)', cat:'hormones', icon:'⚡', short:'The primary androgen governing energy, muscle mass, mood, libido, and metabolic function in both men and women.', why:'Total testosterone reflects overall androgen production but must be interpreted alongside free testosterone and SHBG. Low levels correlate with fatigue, low libido, muscle loss, insulin resistance, and depression. Optimal levels differ significantly from "normal" reference ranges.', std:'300–1000 ng/dL (men), 15–70 ng/dL (women)', opt:'600–900 ng/dL (men), 50–80 ng/dL (women)', unit:'ng/dL' },
+  { id:'testFree', name:'Testosterone (Free)', cat:'hormones', icon:'⚡', short:'The biologically active fraction of testosterone — what your cells can actually use, unbound from carrier proteins.', why:'Up to 98% of testosterone is bound to SHBG or albumin and unavailable for tissue use. Free testosterone reflects what is actually biologically active. A man can have normal total testosterone but low free testosterone due to high SHBG — and experience all the symptoms of deficiency.', std:'5–21 ng/dL (men)', opt:'15–25 ng/dL (men)', unit:'ng/dL' },
+  { id:'shbg', name:'SHBG (Sex Hormone Binding Globulin)', cat:'hormones', icon:'⚡', short:'The protein that binds sex hormones and regulates how much is biologically active — essential context for interpreting testosterone.', why:'High SHBG reduces free testosterone availability despite normal total levels. Low SHBG (common in insulin resistance and obesity) can make total testosterone appear adequate when functional hormone activity is compromised. SHBG is the key to interpreting your androgen picture accurately.', std:'10–57 nmol/L (men), 18–144 nmol/L (women)', opt:'20–40 nmol/L (men)', unit:'nmol/L' },
+  { id:'estradiol', name:'Estradiol (E2)', cat:'hormones', icon:'⚡', short:'The primary estrogen — critical for bone density, cardiovascular protection, cognitive function, and libido in both sexes.', why:'In women, estradiol drives the menstrual cycle and protects bone and cardiovascular health. In men, it is produced via aromatization of testosterone and is equally important — low levels cause joint pain, low libido, and osteoporosis; high levels cause fluid retention and gynecomastia.', std:'15–350 pg/mL (women, cycle-dependent); < 39 pg/mL (men)', opt:'Women (follicular): 50–200 pg/mL; Men: 20–30 pg/mL', unit:'pg/mL' },
+  { id:'dheas', name:'DHEA-S', cat:'hormones', icon:'⚡', short:'The most abundant circulating hormone in the body — a precursor to sex hormones and a marker of adrenal reserve and biological aging.', why:'DHEA-S declines steadily with age, peaking in the late 20s. Low levels correlate with fatigue, immune dysfunction, and accelerated aging. It serves as a precursor pool for both testosterone and estrogen. Tracking DHEA-S over time is a useful proxy for biological age.', std:'35–430 µg/dL (men), 45–320 µg/dL (women)', opt:'200–350 µg/dL (men), 150–250 µg/dL (women)', unit:'µg/dL' },
+  { id:'cortisol', name:'Cortisol (AM)', cat:'hormones', icon:'⚡', short:'The primary stress and wake hormone — measured at peak morning levels to evaluate adrenal function and HPA axis integrity.', why:'Morning cortisol reflects adrenal reserve and circadian rhythm integrity. Chronically elevated cortisol suppresses testosterone, promotes fat storage, impairs sleep, and accelerates immune aging. Low morning cortisol can indicate adrenal insufficiency or burnout.', std:'6–23 µg/dL (AM)', opt:'12–20 µg/dL (AM)', unit:'µg/dL' },
+  { id:'igf1', name:'IGF-1 (Insulin-like Growth Factor 1)', cat:'hormones', icon:'⚡', short:'The primary mediator of growth hormone action — a key marker of metabolic vitality, tissue repair, and biological aging.', why:'IGF-1 declines with age and reflects growth hormone output. Optimal levels support muscle synthesis, bone density, cognitive function, and cellular repair. Very high IGF-1 is associated with increased cancer risk; very low levels correlate with sarcopenia and frailty.', std:'75–200 ng/mL (age-dependent)', opt:'150–250 ng/mL (age-adjusted)', unit:'ng/mL' },
+  { id:'progesterone', name:'Progesterone', cat:'hormones', icon:'⚡', short:'A key sex hormone that balances estrogen, supports sleep, calms the nervous system, and is critical during the luteal phase.', why:'In women, progesterone deficiency causes irregular cycles, poor sleep, anxiety, and estrogen dominance symptoms. In men, progesterone is a precursor to testosterone and has neuroprotective effects. Low progesterone is among the most undertested and underdiagnosed hormonal imbalances.', std:'Women (luteal): 5–20 ng/mL; Men: 0.1–0.3 ng/mL', opt:'Women (luteal): 10–25 ng/mL', unit:'ng/mL' },
+  { id:'fsh', name:'FSH (Follicle Stimulating Hormone)', cat:'hormones', icon:'⚡', short:'A pituitary hormone that drives ovarian follicle development in women and sperm production in men — an essential fertility and menopause marker.', why:'Elevated FSH in women signals diminished ovarian reserve or menopause. In men, elevated FSH with low testosterone indicates primary hypogonadism (testicular origin). Low FSH in both sexes points to pituitary or hypothalamic dysfunction.', std:'Women: 3–10 mIU/mL (follicular); Men: 1–12 mIU/mL', opt:'Context-dependent by sex and cycle phase', unit:'mIU/mL' },
+  { id:'lh', name:'LH (Luteinizing Hormone)', cat:'hormones', icon:'⚡', short:'The pituitary trigger for testosterone production in men and ovulation in women — essential for interpreting the full hormonal axis.', why:'LH and FSH together define whether a hormone problem originates in the gonads (primary) or the pituitary/hypothalamus (secondary). This distinction changes treatment entirely. The LH:FSH ratio is also diagnostically important in PCOS.', std:'Women: 2–15 mIU/mL; Men: 1–9 mIU/mL', opt:'Interpretation requires clinical context', unit:'mIU/mL' },
+
+  // METABOLIC
+  { id:'glucose', name:'Fasting Glucose', cat:'metabolic', icon:'🔥', short:'The foundational metabolic marker — reflecting how well your body manages blood sugar in a rested, fasted state.', why:'Fasting glucose is the primary screen for diabetes and prediabetes. But "normal" on standard panels (< 100 mg/dL) still leaves room for metabolic dysfunction. Optimal levels below 85 mg/dL correlate with reduced cancer, cardiovascular, and all-cause mortality risk.', std:'70–99 mg/dL (normal); 100–125 (prediabetes)', opt:'72–85 mg/dL', unit:'mg/dL' },
+  { id:'hba1c', name:'HbA1c (Hemoglobin A1c)', cat:'metabolic', icon:'🔥', short:'A 90-day average of blood sugar control — far more informative than a single glucose measurement.', why:'HbA1c reflects cumulative glucose exposure over three months by measuring glycated hemoglobin. It catches chronic hyperglycemia missed by fasting glucose alone and is the standard diagnostic tool for diabetes. Levels above 5.6% indicate prediabetes risk.', std:'< 5.7% (normal)', opt:'4.8–5.4%', unit:'%' },
+  { id:'insulin', name:'Fasting Insulin', cat:'metabolic', icon:'🔥', short:'The most sensitive early-warning marker for insulin resistance — often elevated for a decade before glucose becomes abnormal.', why:'Insulin resistance drives type 2 diabetes, PCOS, weight gain, cardiovascular disease, and many cancers — but fasting glucose can remain normal while insulin is already chronically elevated. Fasting insulin catches the problem 10–15 years earlier than glucose does.', std:'2–25 µIU/mL', opt:'2–6 µIU/mL', unit:'µIU/mL' },
+  { id:'homaIR', name:'HOMA-IR', cat:'metabolic', icon:'🔥', short:'A calculated index of insulin resistance derived from fasting glucose and insulin — a composite view of metabolic function.', why:'HOMA-IR = (fasting insulin × fasting glucose) / 405. It quantifies the degree of insulin resistance more meaningfully than either value alone. A HOMA-IR above 2.0 suggests significant insulin resistance; above 2.9 is associated with metabolic syndrome.', std:'< 2.9 (accepted normal)', opt:'< 1.5', unit:'index' },
+  { id:'uricAcid', name:'Uric Acid', cat:'metabolic', icon:'🔥', short:'Best known as the gout marker, but elevated uric acid is also a reliable indicator of insulin resistance and cardiovascular risk.', why:'Uric acid is produced when purines are metabolized. Hyperuricemia causes gout but also independently predicts metabolic syndrome, kidney disease, and cardiovascular events. Fructose consumption and insulin resistance drive levels up even without dietary purine excess.', std:'2.5–7.5 mg/dL (men)', opt:'< 5.5 mg/dL', unit:'mg/dL' },
+
+  // THYROID
+  { id:'tsh', name:'TSH (Thyroid Stimulating Hormone)', cat:'thyroid', icon:'🦋', short:'The master signal from the pituitary gland telling the thyroid how hard to work — the primary thyroid screening test.', why:'TSH is the most sensitive indicator of thyroid status. It rises when the thyroid is underperforming (hypothyroid) and falls when it is overactive (hyperthyroid). However, TSH alone misses many cases of thyroid dysfunction — particularly conversion problems and autoimmune disease.', std:'0.4–4.5 mIU/L', opt:'1.0–2.0 mIU/L', unit:'mIU/L' },
+  { id:'freeT3', name:'Free T3 (Triiodothyronine)', cat:'thyroid', icon:'🦋', short:'The active, cellular form of thyroid hormone — what your tissues actually use for metabolism, energy, and temperature regulation.', why:'T3 is four times more metabolically potent than T4. TSH and T4 can appear normal while T3 conversion is impaired — leaving patients with hypothyroid symptoms but "normal" labs. Low Free T3 causes fatigue, cold intolerance, weight gain, and brain fog despite normal TSH.', std:'2.3–4.2 pg/mL', opt:'3.2–4.2 pg/mL', unit:'pg/mL' },
+  { id:'freeT4', name:'Free T4 (Thyroxine)', cat:'thyroid', icon:'🦋', short:'The storage form of thyroid hormone that must be converted to active T3 — a bridge between TSH signaling and cellular activity.', why:'T4 is produced by the thyroid and converted peripherally to active T3. Low Free T4 with elevated TSH confirms hypothyroidism. Normal T4 with low T3 suggests a conversion problem — often caused by stress, nutrient deficiencies, or inflammation.', std:'0.8–1.8 ng/dL', opt:'1.1–1.6 ng/dL', unit:'ng/dL' },
+  { id:'reverseT3', name:'Reverse T3', cat:'thyroid', icon:'🦋', short:'An inactive T3 metabolite that competes with active T3 for receptor sites — elevated levels block thyroid function even with normal lab values.', why:'Under chronic stress, inflammation, or caloric restriction, the body converts T4 to Reverse T3 instead of active T3. High rT3 blocks T3 receptors, causing functional hypothyroidism — with normal TSH, T4, and even T3. This marker is missed by every standard thyroid panel.', std:'9.2–24.1 ng/dL', opt:'< 15 ng/dL; Free T3:rT3 ratio > 20', unit:'ng/dL' },
+  { id:'tpoAb', name:'TPO Antibodies', cat:'thyroid', icon:'🦋', short:'Markers of autoimmune thyroid disease — elevated before TSH or T4 shows any abnormality, sometimes by years.', why:'Anti-TPO antibodies attack thyroid peroxidase, the enzyme responsible for thyroid hormone synthesis. Elevated TPO antibodies diagnose Hashimoto thyroiditis — the most common autoimmune disease in the US. Identifying it early allows intervention before gland destruction progresses.', std:'< 35 IU/mL', opt:'< 10 IU/mL', unit:'IU/mL' },
+  { id:'tgAb', name:'Thyroglobulin Antibodies', cat:'thyroid', icon:'🦋', short:'A second autoimmune thyroid marker that, together with TPO antibodies, confirms Hashimoto disease or Graves disease.', why:'Thyroglobulin antibodies (TgAb) are present in 60–80% of Hashimoto patients and some Graves patients. In thyroid cancer follow-up, TgAb can interfere with thyroglobulin measurements. Testing both TPO and TgAb maximizes autoimmune thyroid detection.', std:'< 4 IU/mL', opt:'< 1 IU/mL', unit:'IU/mL' },
+  { id:'vitD3', name:'Vitamin D (25-OH)', cat:'thyroid', icon:'🦋', short:'The master hormone-like vitamin that governs immune regulation, thyroid function, bone density, and hundreds of gene expressions.', why:'Vitamin D deficiency impairs thyroid hormone receptor sensitivity, worsens autoimmune thyroid disease, and reduces immune surveillance. Over 40% of Americans are deficient. Optimal levels require supplementation and monitoring — the standard "sufficient" cutoff of 30 ng/mL is too low for optimal function.', std:'30–100 ng/mL (sufficient)', opt:'60–80 ng/mL', unit:'ng/mL' },
+
+  // IMMUNE & INFLAMMATION
+  { id:'ferritin', name:'Ferritin', cat:'immune', icon:'🛡️', short:'The primary iron storage protein — critically important as both a nutrient marker and an acute-phase inflammatory protein.', why:'Ferritin reflects iron stores but also rises sharply with inflammation, masking true deficiency. Low ferritin causes fatigue, hair loss, and poor cognitive function long before anemia develops. High ferritin signals iron overload (hemochromatosis risk) or hidden chronic inflammation.', std:'12–300 ng/mL (men); 12–150 ng/mL (women)', opt:'70–150 ng/mL (men); 50–100 ng/mL (women)', unit:'ng/mL' },
+  { id:'fibrinogen', name:'Fibrinogen', cat:'immune', icon:'🛡️', short:'A clotting protein and acute-phase reactant — elevated levels indicate chronic inflammation and increased thrombosis risk.', why:'Fibrinogen is both a cardiovascular risk marker and a marker of systemic inflammation. Chronically elevated fibrinogen thickens blood, promotes clot formation, and predicts cardiovascular events. It is responsive to lifestyle modification, statins, and anti-inflammatory interventions.', std:'200–400 mg/dL', opt:'200–300 mg/dL', unit:'mg/dL' },
+  { id:'il6', name:'IL-6 (Interleukin-6)', cat:'immune', icon:'🛡️', short:'A key inflammatory cytokine that bridges acute immune response and chronic disease — elevated in metabolic syndrome, cancer, and autoimmunity.', why:'IL-6 orchestrates the acute phase inflammatory response and stimulates CRP production. Chronically elevated IL-6 drives insulin resistance, muscle wasting, depression, and accelerated cognitive aging. It is a key biomarker in oncology, rheumatology, and metabolic medicine.', std:'< 7 pg/mL', opt:'< 3 pg/mL', unit:'pg/mL' },
+
+  // NUTRIENTS & VITAMINS
+  { id:'b12', name:'Vitamin B12', cat:'nutrients', icon:'✨', short:'Essential for nerve function, red blood cell formation, and DNA synthesis — deficiency causes neurological damage that can be irreversible.', why:'B12 deficiency causes peripheral neuropathy, megaloblastic anemia, cognitive impairment, and elevated homocysteine. It is common in vegans, those taking metformin or acid suppressants, and older adults with reduced intrinsic factor. Serum B12 can appear adequate while functional deficiency exists — methylmalonic acid confirms.', std:'200–900 pg/mL', opt:'700–1000 pg/mL', unit:'pg/mL' },
+  { id:'folate', name:'Folate (B9)', cat:'nutrients', icon:'✨', short:'Critical for DNA synthesis, methylation, and homocysteine metabolism — deficiency has serious neurological and cardiovascular consequences.', why:'Folate is essential for one-carbon metabolism, driving methylation reactions throughout the body. Deficiency elevates homocysteine, impairs DNA repair, and causes neural tube defects in pregnancy. MTHFR gene variants reduce folate conversion efficiency and require methylated supplementation.', std:'> 5.9 ng/mL', opt:'> 15 ng/mL', unit:'ng/mL' },
+  { id:'magnesium', name:'Magnesium (RBC)', cat:'nutrients', icon:'✨', short:'A cofactor in over 300 enzymatic reactions — deficiency is widespread, underlies muscle cramps, sleep disruption, anxiety, and arrhythmias.', why:'Standard serum magnesium reflects less than 1% of total body stores and misses most deficiency. RBC magnesium is the functional measure. Deficiency impairs ATP production, insulin signaling, neurotransmitter balance, and vascular tone. Over 60% of Americans do not meet the RDA.', std:'Serum: 1.7–2.2 mg/dL', opt:'RBC Mag: 5.5–7.0 mg/dL', unit:'mg/dL' },
+  { id:'zinc', name:'Zinc', cat:'nutrients', icon:'✨', short:'A trace mineral essential for immune function, testosterone synthesis, wound healing, and sensory acuity — commonly depleted by stress and poor diet.', why:'Zinc deficiency suppresses immune function, reduces testosterone production, impairs wound healing, and causes loss of taste and smell. It is the second most abundant trace element in the body and a cofactor for over 300 enzymes. Stress, alcohol, and phytate-rich diets deplete it rapidly.', std:'60–130 µg/dL', opt:'90–115 µg/dL', unit:'µg/dL' },
+  { id:'selenium', name:'Selenium', cat:'nutrients', icon:'✨', short:'A critical antioxidant trace mineral that supports thyroid hormone conversion, immune defense, and DNA protection.', why:'Selenium is required for the selenoproteins that convert T4 to active T3 and neutralize peroxides generated during thyroid hormone synthesis. Deficiency worsens Hashimoto thyroiditis, impairs fertility, and reduces cancer surveillance. Soil depletion has made deficiency more common.', std:'70–150 ng/mL', opt:'110–130 ng/mL', unit:'ng/mL' },
+  { id:'omega3', name:'Omega-3 Index', cat:'nutrients', icon:'✨', short:'The ratio of EPA+DHA in red blood cells — a three-month window into cardiovascular inflammation and omega-3 status.', why:'The Omega-3 Index (EPA+DHA as % of RBC fatty acids) predicts cardiovascular risk independently of cholesterol. An index below 4% doubles cardiac event risk. Achieving 8–12% through diet or supplementation reduces inflammation, triglycerides, and arrhythmia risk. RBC measurement reflects long-term intake.', std:'> 4% (minimum)', opt:'8–12%', unit:'% of RBC fatty acids' },
+  { id:'vitA', name:'Vitamin A (Retinol)', cat:'nutrients', icon:'✨', short:'Essential for immune function, vision, skin integrity, and gene expression — under-measured relative to its broad physiological role.', why:'Vitamin A deficiency impairs immune surveillance, night vision, and epithelial barrier integrity. Excess (usually from supplements) is hepatotoxic. Vitamin A status is tightly connected to zinc (required for retinol-binding protein), making concurrent testing clinically informative.', std:'32–72 µg/dL', opt:'50–80 µg/dL', unit:'µg/dL' },
+  { id:'coq10', name:'CoQ10 (Coenzyme Q10)', cat:'nutrients', icon:'✨', short:'The mitochondrial fuel catalyst — essential for ATP production and depleted by statins, aging, and metabolic stress.', why:'CoQ10 is the electron carrier in the mitochondrial respiratory chain. It declines with age and is dramatically depleted by statin drugs (which block its synthesis pathway). Low CoQ10 causes muscle weakness, fatigue, and cardiac dysfunction. It is also a potent lipid-soluble antioxidant.', std:'0.5–1.7 µg/mL', opt:'1.0–2.0 µg/mL', unit:'µg/mL' },
+
+  // KIDNEY
+  { id:'egfr', name:'eGFR (Estimated GFR)', cat:'kidney', icon:'🫘', short:'The primary measure of kidney filtration capacity — detects chronic kidney disease before symptoms ever appear.', why:'eGFR estimates glomerular filtration rate from creatinine, age, and sex. Early CKD (eGFR 60–90) is asymptomatic and reversible with intervention. Below 60, damage accelerates. Tracking eGFR trends over time is more informative than any single value.', std:'> 60 mL/min/1.73m² (acceptable)', opt:'> 90 mL/min/1.73m²', unit:'mL/min/1.73m²' },
+  { id:'creatinine', name:'Creatinine', cat:'kidney', icon:'🫘', short:'A waste product of muscle metabolism cleared by the kidneys — a direct indicator of kidney filtration function.', why:'Creatinine rises when kidneys cannot filter adequately. It must be interpreted alongside eGFR and muscle mass — athletes and muscular individuals have higher baseline creatinine. Rapid creatinine increases signal acute kidney injury even within the "normal" range.', std:'0.7–1.3 mg/dL (men); 0.5–1.1 mg/dL (women)', opt:'0.8–1.1 mg/dL (men)', unit:'mg/dL' },
+  { id:'cystatinC', name:'Cystatin C', cat:'kidney', icon:'🫘', short:'A more accurate kidney function marker than creatinine — not affected by muscle mass, making it superior for athletes and the elderly.', why:'Cystatin C is produced at a constant rate by all nucleated cells and filtered exclusively by glomeruli. Unlike creatinine, it is unaffected by muscle mass, diet, or exercise, making it the gold standard for early CKD detection and a better predictor of cardiovascular outcomes.', std:'0.62–1.15 mg/L', opt:'< 0.85 mg/L', unit:'mg/L' },
+  { id:'bun', name:'BUN (Blood Urea Nitrogen)', cat:'kidney', icon:'🫘', short:'A kidney and hydration marker that, in combination with creatinine, reveals whether elevated creatinine is renal or pre-renal in origin.', why:'BUN reflects protein catabolism and kidney urea excretion. The BUN:creatinine ratio distinguishes kidney-intrinsic problems from dehydration or high protein intake. High BUN with high creatinine suggests kidney disease; high BUN with normal creatinine often indicates dehydration.', std:'7–20 mg/dL', opt:'10–16 mg/dL', unit:'mg/dL' },
+
+  // LIVER
+  { id:'alt', name:'ALT (Alanine Aminotransferase)', cat:'liver', icon:'🩺', short:'The most liver-specific enzyme — elevated ALT is a reliable signal of hepatocyte injury from NAFLD, alcohol, medications, or toxins.', why:'ALT is the primary marker of liver cell damage. It rises with non-alcoholic fatty liver disease (NAFLD), alcohol use, medications (statins, acetaminophen, antibiotics), and viral hepatitis. Even mildly elevated ALT (> 30 U/L) within "normal" ranges predicts liver disease progression.', std:'7–56 U/L', opt:'< 25 U/L (men); < 20 U/L (women)', unit:'U/L' },
+  { id:'ast', name:'AST (Aspartate Aminotransferase)', cat:'liver', icon:'🩺', short:'A hepatic and muscle enzyme — the AST:ALT ratio distinguishes alcoholic liver injury from other causes.', why:'AST rises with liver cell death but is less liver-specific than ALT (it also elevates with muscle injury, hemolysis, and cardiac damage). An AST:ALT ratio > 2:1 strongly suggests alcoholic hepatitis. Isolated AST elevation in an athlete often reflects muscle, not liver, stress.', std:'10–40 U/L', opt:'< 25 U/L', unit:'U/L' },
+  { id:'ggt', name:'GGT (Gamma-Glutamyltransferase)', cat:'liver', icon:'🩺', short:'A sensitive liver enzyme elevated by alcohol, medications, and fatty liver — and an independent cardiovascular risk marker.', why:'GGT is highly sensitive to alcohol consumption, even at modest levels. It also rises with NAFLD, oxidative stress, and certain medications. Elevated GGT independently predicts cardiovascular mortality and all-cause mortality — its prognostic value extends beyond liver disease.', std:'9–48 U/L (men); 7–25 U/L (women)', opt:'< 20 U/L', unit:'U/L' },
+  { id:'albumin', name:'Albumin', cat:'liver', icon:'🩺', short:'The liver\'s primary export protein — a sensitive marker of nutritional status, chronic disease, and synthetic liver function.', why:'Albumin reflects the liver\'s capacity to synthesize protein. It declines in liver failure, malnutrition, chronic inflammation, and kidney disease (nephrotic syndrome). Low albumin is a powerful predictor of poor surgical outcomes and all-cause mortality in hospitalized patients.', std:'3.5–5.0 g/dL', opt:'4.2–5.0 g/dL', unit:'g/dL' },
+  { id:'bilirubin', name:'Bilirubin (Total)', cat:'liver', icon:'🩺', short:'A heme breakdown product cleared by the liver — elevated bilirubin can signal hemolysis, liver dysfunction, or bile duct obstruction.', why:'Total bilirubin integrates indirect (unconjugated) and direct (conjugated) fractions. Elevated indirect bilirubin with normal liver enzymes often reflects Gilbert syndrome (a benign genetic variant) or hemolysis. Elevated direct bilirubin suggests hepatocellular dysfunction or biliary obstruction.', std:'0.2–1.2 mg/dL', opt:'0.3–0.9 mg/dL', unit:'mg/dL' },
+
+  // BLOOD & HEMATOLOGY
+  { id:'cbc', name:'Complete Blood Count (CBC)', cat:'blood', icon:'🔬', short:'The foundational hematology panel — evaluating red cells, white cells, and platelets to detect anemia, infection, and bone marrow disorders.', why:'CBC with differential gives a complete picture of blood cell populations. Anemia patterns (microcytic vs. macrocytic vs. normocytic) point to specific deficiencies or diseases. White cell differentials distinguish viral from bacterial infection, and can flag early leukemia. Platelet counts screen for clotting disorders.', std:'Varies by component', opt:'All components within established reference ranges', unit:'Multiple' },
+  { id:'rdw', name:'RDW (Red Cell Distribution Width)', cat:'blood', icon:'🔬', short:'A measure of red blood cell size variability — an underappreciated marker of nutritional deficiencies, inflammation, and cardiovascular risk.', why:'Elevated RDW indicates that red blood cells vary significantly in size — a sign of mixed deficiency (iron + B12/folate), or chronic disease. High RDW is an independent predictor of cardiovascular mortality, all-cause mortality, and dementia risk, making it a surprisingly powerful population-level risk marker.', std:'11.5–14.5%', opt:'11.5–13.0%', unit:'%' },
+  { id:'wbc', name:'WBC with Differential', cat:'blood', icon:'🔬', short:'The complete white blood cell count and breakdown by cell type — the immune system\'s full readout.', why:'Total WBC reflects overall immune activity. The differential (neutrophils, lymphocytes, monocytes, eosinophils, basophils) identifies the nature of the immune response. The neutrophil-to-lymphocyte ratio (NLR) is an emerging marker of chronic inflammation and cancer risk.', std:'4,500–11,000 /µL', opt:'5,000–8,000 /µL with normal differential', unit:'/µL' },
+  { id:'platelets', name:'Platelets', cat:'blood', icon:'🔬', short:'The clotting cells — measured to screen for bleeding disorders, clotting disorders, and bone marrow health.', why:'Low platelets (thrombocytopenia) cause bleeding risk; elevated platelets (thrombocytosis) can indicate infection, iron deficiency, or a myeloproliferative disorder. Platelet counts are also sensitive markers of spleen and bone marrow function and change meaningfully with liver disease.', std:'150,000–400,000 /µL', opt:'175,000–350,000 /µL', unit:'/µL' },
+
+  // CANCER MARKERS
+  { id:'psa', name:'PSA (Prostate-Specific Antigen)', cat:'cancer', icon:'🎗️', short:'The primary prostate cancer screening marker — imperfect but important when trended over time and combined with clinical context.', why:'PSA is produced by prostate cells and rises with cancer, BPH, infection, and inflammation. A single value is less informative than PSA velocity (rate of change over time). Elevated PSA warrants further evaluation — not automatic intervention. Free PSA and PSA density add specificity to screening.', std:'< 4.0 ng/mL (standard); age-adjusted preferred', opt:'< 1.5 ng/mL (men under 50); trend matters most', unit:'ng/mL' },
+  { id:'cea', name:'CEA (Carcinoembryonic Antigen)', cat:'cancer', icon:'🎗️', short:'A broad cancer surveillance marker — primarily for colorectal cancer monitoring, but also elevated with lung, breast, and gastrointestinal cancers.', why:'CEA is a glycoprotein elevated in colorectal, lung, breast, gastric, and pancreatic cancers, as well as in smokers and with inflammatory bowel disease. It is most valuable as a surveillance tool after cancer treatment rather than for primary detection. Trending CEA over time is more informative than a single value.', std:'< 3.0 ng/mL (non-smokers)', opt:'< 2.5 ng/mL', unit:'ng/mL' },
+  { id:'afp', name:'AFP (Alpha-Fetoprotein)', cat:'cancer', icon:'🎗️', short:'A hepatocellular carcinoma and germ cell tumor marker — critical for liver cancer surveillance in high-risk individuals.', why:'AFP is produced primarily by fetal liver cells and yolk sac tissue. In adults, elevated AFP signals hepatocellular carcinoma (HCC), testicular germ cell tumors, or liver regeneration. Briella Health includes AFP as part of comprehensive cancer surveillance, particularly in those with metabolic liver disease risk.', std:'< 10 ng/mL', opt:'< 5 ng/mL', unit:'ng/mL' },
+  { id:'ca125', name:'CA-125', cat:'cancer', icon:'🎗️', short:'The primary ovarian cancer marker — valuable for surveillance in high-risk women and monitoring treatment response.', why:'CA-125 is elevated in 80% of advanced ovarian cancers and 50% of stage I cases. It is also elevated in endometriosis, fibroids, and pelvic inflammatory disease, limiting specificity for screening. It is most clinically useful in women with a known risk history and as a post-treatment surveillance tool.', std:'< 35 U/mL', opt:'< 20 U/mL', unit:'U/mL' }
+];
+
+let activeFilter = 'all';
+
+function renderBiomarkers(list) {
+  const grid = document.getElementById('bmGrid');
+  const label = document.getElementById('bmCountLabel');
+  label.textContent = `Showing ${list.length} biomarker${list.length !== 1 ? 's' : ''}`;
+  if(list.length === 0) { grid.innerHTML = '<div style="color:var(--gray-500);font-size:0.9rem;grid-column:1/-1;padding:40px 0;">No biomarkers match your search.</div>'; return; }
+  grid.innerHTML = list.map(b => `
+    <div class="bm-lib-card" onclick="this.querySelector('.bm-detail').style.display=this.querySelector('.bm-detail').style.display==='none'?'block':'none'">
+      <div class="bm-lib-card-header">
+        <span class="bm-lib-cat-tag">${catLabel(b.cat)}</span>
+        <span style="font-size:1.3rem">${b.icon}</span>
+      </div>
+      <h4>${b.name}</h4>
+      <p>${b.short}</p>
+      <div class="bm-detail" style="display:none;margin-top:14px;padding-top:14px;border-top:1px solid var(--border)">
+        <p style="font-size:0.82rem;color:var(--gray-300);margin-bottom:12px;">${b.why}</p>
+        <div class="bm-lib-ranges">
+          <div class="bm-range-item"><label>Standard Range</label><span>${b.std}</span></div>
+          <div class="bm-range-item"><label>Optimal Range</label><span class="optimal">${b.opt}</span></div>
+        </div>
+      </div>
+    </div>
+  `).join('');
+}
+
+function catLabel(cat) {
+  const labels = {cardiovascular:'Cardiovascular',hormones:'Hormones',metabolic:'Metabolic',thyroid:'Thyroid',immune:'Immune',nutrients:'Nutrients',kidney:'Kidney',liver:'Liver',blood:'Blood',cancer:'Cancer Markers'};
+  return labels[cat] || cat;
+}
+
+function filterBiomarkers() {
+  const q = document.getElementById('bmSearch').value.toLowerCase();
+  let list = biomarkers;
+  if(activeFilter !== 'all') list = list.filter(b => b.cat === activeFilter);
+  if(q) list = list.filter(b => b.name.toLowerCase().includes(q) || b.short.toLowerCase().includes(q) || b.cat.includes(q));
+  renderBiomarkers(list);
+}
+
+function setFilter(cat, el) {
+  activeFilter = cat;
+  document.querySelectorAll('.filter-tab').forEach(t => t.classList.remove('active'));
+  el.classList.add('active');
+  filterBiomarkers();
+}
+
+function openLoginModal() { document.getElementById('loginModal').classList.add('open'); document.body.style.overflow='hidden'; }
+function closeLoginModal() { document.getElementById('loginModal').classList.remove('open'); document.body.style.overflow=''; }
+document.addEventListener('keydown', e => { if(e.key==='Escape') closeLoginModal(); });
+
+renderBiomarkers(biomarkers);
+</script>
+</body>
+</html>
