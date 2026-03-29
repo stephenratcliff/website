@@ -13,25 +13,72 @@
 
 <!-- ===== NAVIGATION ===== -->
 <nav>
-  <div class="nav-inner">
-    <a href="index.html" class="nav-logo">
-      <div class="logo-mark">B</div>
-      Briella <span>Health</span>
-    </a>
-    <div class="nav-links" id="navLinks">
-      <a href="how-it-works.html">How It Works</a>
-      <a href="biomarkers.html">What We Test</a>
-      <a href="membership.html" class="active">Membership</a>
-      <a href="for-providers.html">For Providers</a>
-      <a href="blog.html">Journal</a>
-      <a href="login.html" class="btn btn-ghost" style="font-size:0.82rem;padding:8px 16px;">Login</a>
-      <a href="signup.html" class="btn btn-primary nav-cta">Get Started</a>
-    </div>
-    <button class="nav-toggle" onclick="document.getElementById('navLinks').classList.toggle('open')" aria-label="Menu">
-      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
-    </button>
-  </div>
-</nav>
+      <div class="nav-inner">
+        <a href="index.html" class="nav-logo">
+          <div class="logo-mark">B</div>
+          Briella <span>Health</span>
+        </a>
+        <div class="nav-links" id="navLinks">
+          <a href="how-it-works.html">How It Works</a>
+          <a href="biomarkers.html">What We Test</a>
+          <a href="membership.html">Membership</a>
+          <a href="for-providers.html">For Providers</a>
+          <a href="login.html" class="btn btn-ghost" style="font-size:0.82rem;padding:8px 16px;">Login</a>
+          <a href="signup.html" class="btn btn-primary nav-cta">Get Started</a>
+          <button class="nav-more-btn" id="navMoreBtn" onclick="toggleNavDropdown()" aria-label="More">
+            <span class="more-bar"></span>
+            <span class="more-bar"></span>
+          </button>
+        </div>
+        <button class="nav-toggle" onclick="document.getElementById('navLinks').classList.toggle('open')" aria-label="Menu">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+        </button>
+      </div>
+      <div class="nav-dropdown" id="navDropdown">
+        <div class="nav-dropdown-inner">
+          <div class="nav-dropdown-cols">
+            <div class="nav-dropdown-col">
+              <div class="nav-dropdown-col-title">Explore</div>
+              <a href="blog.html" class="nav-dropdown-link">
+                <span class="nav-dropdown-label">Journal</span>
+                <span class="nav-dropdown-desc">Physician-written health insights &amp; articles</span>
+              </a>
+              <a href="for-providers.html" class="nav-dropdown-link">
+                <span class="nav-dropdown-label">For Providers</span>
+                <span class="nav-dropdown-desc">Partner program for clinics &amp; practices</span>
+              </a>
+              <a href="mailto:hello@briellahealth.com" class="nav-dropdown-link">
+                <span class="nav-dropdown-label">Contact Us</span>
+                <span class="nav-dropdown-desc">hello@briellahealth.com</span>
+              </a>
+            </div>
+            <div class="nav-dropdown-col">
+              <div class="nav-dropdown-col-title">Quick Links</div>
+              <a href="membership.html" class="nav-dropdown-link">
+                <span class="nav-dropdown-label">Pricing</span>
+                <span class="nav-dropdown-desc">$365/year — all-inclusive membership</span>
+              </a>
+              <a href="how-it-works.html" class="nav-dropdown-link">
+                <span class="nav-dropdown-label">How It Works</span>
+                <span class="nav-dropdown-desc">From sign-up to results in 3 steps</span>
+              </a>
+              <a href="signup.html" class="nav-dropdown-link">
+                <span class="nav-dropdown-label">Gift a Membership</span>
+                <span class="nav-dropdown-desc">Give the gift of comprehensive health data</span>
+              </a>
+            </div>
+            <div class="nav-dropdown-col">
+              <div class="nav-dropdown-card">
+                <div class="eyebrow">Now Enrolling</div>
+                <p class="nav-dropdown-card-title">100+ biomarkers.<br><em>$365/year.</em></p>
+                <p class="nav-dropdown-card-body">No insurance required. HSA/FSA eligible. Quest Diagnostics nationwide.</p>
+                <a href="signup.html" class="btn btn-primary" style="display:inline-block;">Get Started &rarr;</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </nav>
 
 <!-- ===== TICKER BAR ===== -->
 <div class="ticker-bar">
@@ -420,5 +467,34 @@ document.addEventListener('keydown', e => { if(e.key==='Escape') closeLoginModal
   document.addEventListener('keydown',function(e){if(e.key==='Escape'){var o=document.getElementById('helpOverlay');if(o)o.classList.remove('open');}});
 })();
 </script>
-</body>
+
+    <script>
+    /* ---- Nav dropdown ---- */
+    function toggleNavDropdown() {
+      var dd = document.getElementById('navDropdown');
+      var btn = document.getElementById('navMoreBtn');
+      if (!dd) return;
+      var isOpen = dd.classList.contains('open');
+      dd.classList.toggle('open', !isOpen);
+      btn.classList.toggle('open', !isOpen);
+    }
+    document.addEventListener('click', function(e) {
+      var btn = document.getElementById('navMoreBtn');
+      var dd  = document.getElementById('navDropdown');
+      if (!btn || !dd) return;
+      if (!btn.contains(e.target) && !dd.contains(e.target)) {
+        dd.classList.remove('open');
+        btn.classList.remove('open');
+      }
+    });
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape') {
+        var dd  = document.getElementById('navDropdown');
+        var btn = document.getElementById('navMoreBtn');
+        if (dd) dd.classList.remove('open');
+        if (btn) btn.classList.remove('open');
+      }
+    });
+    </script>
+  </body>
 </html>
