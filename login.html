@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Briella Health — Log In</title>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <style>
+    body { min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; background: var(--bg-dark); padding: 24px; }
+
+    .login-wrap {
+      width: 100%;
+      max-width: 440px;
+    }
+    .login-logo {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      font-family: var(--font-heading);
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: var(--white);
+      text-decoration: none;
+      margin-bottom: 44px;
+    }
+    .login-logo .logo-mark { width: 36px; height: 36px; font-size: 1rem; }
+    .login-logo span { color: var(--teal-light); }
+
+    .login-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-strong);
+      border-radius: 18px;
+      padding: 44px 40px;
+      box-shadow: 0 24px 64px rgba(0,0,0,0.4);
+    }
+    .login-card h1 {
+      font-size: 1.8rem;
+      text-align: center;
+      margin-bottom: 8px;
+    }
+    .login-subtitle {
+      text-align: center;
+      color: var(--gray-500);
+      font-size: 0.88rem;
+      margin-bottom: 36px;
+    }
+
+    .login-tabs {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      border: 1px solid var(--border-strong);
+      border-radius: 10px;
+      overflow: hidden;
+      margin-bottom: 32px;
+    }
+    .login-tab-btn {
+      padding: 11px;
+      text-align: center;
+      font-family: var(--font-body);
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: var(--gray-500);
+      background: rgba(255,255,255,0.03);
+      border: none;
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+    .login-tab-btn:first-child { border-right: 1px solid var(--border-strong); }
+    .login-tab-btn.active {
+      background: var(--teal-dim);
+      color: var(--teal-light);
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      margin-bottom: 16px;
+    }
+    .form-label {
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      color: var(--gray-400);
+    }
+    .form-input {
+      background: rgba(255,255,255,0.04);
+      border: 1px solid var(--border-strong);
+      border-radius: 9px;
+      padding: 13px 16px;
+      color: var(--white);
+      font-family: var(--font-body);
+      font-size: 0.92rem;
+      outline: none;
+      transition: border-color 0.15s, box-shadow 0.15s;
+      width: 100%;
+      box-sizing: border-box;
+    }
+    .form-input:focus { border-color: var(--teal); box-shadow: 0 0 0 3px rgba(13,148,136,0.12); }
+    .form-input::placeholder { color: var(--gray-600); }
+
+    .forgot-link {
+      display: block;
+      text-align: right;
+      font-size: 0.8rem;
+      color: var(--teal-light);
+      text-decoration: none;
+      margin-top: -8px;
+      margin-bottom: 20px;
+    }
+    .forgot-link:hover { text-decoration: underline; }
+
+    .btn-login {
+      width: 100%;
+      padding: 14px;
+      border-radius: 10px;
+      background: var(--bg-dark);
+      color: var(--white);
+      font-family: var(--font-heading);
+      font-size: 0.95rem;
+      font-weight: 700;
+      border: 1px solid var(--border-strong);
+      cursor: pointer;
+      transition: background 0.15s, border-color 0.15s;
+      margin-bottom: 12px;
+    }
+    .btn-login:hover { background: rgba(255,255,255,0.07); border-color: var(--gray-500); }
+    .btn-login.btn-teal {
+      background: var(--teal);
+      border-color: var(--teal);
+    }
+    .btn-login.btn-teal:hover { background: var(--teal-light); border-color: var(--teal-light); }
+
+    .login-or {
+      text-align: center;
+      color: var(--gray-600);
+      font-size: 0.78rem;
+      margin: 16px 0;
+      position: relative;
+    }
+    .login-or::before, .login-or::after {
+      content: '';
+      position: absolute;
+      top: 50%; width: 42%;
+      height: 1px;
+      background: var(--border);
+    }
+    .login-or::before { left: 0; }
+    .login-or::after { right: 0; }
+
+    .login-footer {
+      text-align: center;
+      margin-top: 28px;
+      font-size: 0.83rem;
+      color: var(--gray-500);
+    }
+    .login-footer a { color: var(--teal-light); text-decoration: none; font-weight: 600; }
+    .login-footer a:hover { text-decoration: underline; }
+
+    /* Tab panels */
+    .tab-panel { display: none; }
+    .tab-panel.active { display: block; }
+  </style>
+</head>
+<body>
+
+<div class="login-wrap">
+  <a href="index.html" class="login-logo">
+    <div class="logo-mark">B</div>
+    Briella <span>Health</span>
+  </a>
+
+  <div class="login-card">
+    <h1>Welcome back</h1>
+    <p class="login-subtitle">Sign in to your Briella Health account</p>
+
+    <!-- Tab switcher: Patient / Provider -->
+    <div class="login-tabs">
+      <button class="login-tab-btn active" onclick="switchTab('patient', this)">Patient</button>
+      <button class="login-tab-btn" onclick="switchTab('provider', this)">Provider / Team</button>
+    </div>
+
+    <!-- Patient login -->
+    <div class="tab-panel active" id="tab-patient">
+      <form onsubmit="handleLogin(event, 'patient')" novalidate>
+        <div class="form-group">
+          <label class="form-label" for="patientEmail">Email</label>
+          <input class="form-input" type="email" id="patientEmail" placeholder="you@example.com" required>
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="patientPass">Password</label>
+          <input class="form-input" type="password" id="patientPass" placeholder="••••••••" required>
+        </div>
+        <a href="#" class="forgot-link">Forgot password?</a>
+        <button class="btn-login btn-teal" type="submit">Log In</button>
+      </form>
+    </div>
+
+    <!-- Provider login -->
+    <div class="tab-panel" id="tab-provider">
+      <form onsubmit="handleLogin(event, 'provider')" novalidate>
+        <div class="form-group">
+          <label class="form-label" for="providerEmail">Work email</label>
+          <input class="form-input" type="email" id="providerEmail" placeholder="you@clinic.com" required>
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="providerPass">Password</label>
+          <input class="form-input" type="password" id="providerPass" placeholder="••••••••" required>
+        </div>
+        <a href="#" class="forgot-link">Forgot password?</a>
+        <button class="btn-login btn-teal" type="submit">Log In to Provider Portal</button>
+      </form>
+    </div>
+
+    <div class="login-footer">
+      Not a member yet? <a href="signup.html">Join Briella Health</a><br><br>
+      Questions? <a href="mailto:hello@briellahealth.com">Contact us</a>
+    </div>
+  </div>
+</div>
+
+<!-- Floating Help Button -->
+<button class="help-btn" id="helpBtn" onclick="toggleHelp()" aria-label="Help">?</button>
+<div class="help-overlay" id="helpOverlay">
+  <div class="help-panel">
+    <div class="help-panel-header">
+      <span class="help-panel-title">How can we help?</span>
+      <button class="help-panel-close" onclick="toggleHelp()">&#215;</button>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:10px;margin-bottom:24px;">
+      <a href="how-it-works.html" class="help-link">How does Briella Health work?</a>
+      <a href="biomarkers.html" class="help-link">What biomarkers do you test?</a>
+      <a href="membership.html" class="help-link">Membership & pricing questions</a>
+      <a href="signup.html" class="help-link">Create a new account</a>
+    </div>
+    <div style="padding-top:16px;border-top:1px solid var(--border);text-align:center;">
+      <p style="font-size:0.82rem;color:var(--gray-400);margin-bottom:12px;">Still have a question?</p>
+      <a href="mailto:hello@briellahealth.com" class="btn btn-primary" style="width:100%;display:block;text-align:center;">Email Us</a>
+      <p style="font-size:0.75rem;color:var(--gray-600);margin-top:10px;">We typically respond within 1 business day.</p>
+    </div>
+  </div>
+</div>
+
+<script>
+function switchTab(tab, el) {
+  document.querySelectorAll('.login-tab-btn').forEach(b => b.classList.remove('active'));
+  document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+  el.classList.add('active');
+  document.getElementById('tab-' + tab).classList.add('active');
+}
+
+function handleLogin(e, type) {
+  e.preventDefault();
+  // Redirect to appropriate portal (demo)
+  const dest = type === 'provider' ? 'spa-portal.html' : 'patient-portal.html';
+  window.location.href = dest;
+}
+
+function toggleHelp() {
+  document.getElementById('helpOverlay').classList.toggle('open');
+}
+document.addEventListener('keydown', e => { if (e.key === 'Escape') document.getElementById('helpOverlay').classList.remove('open'); });
+</script>
+</body>
+</html>

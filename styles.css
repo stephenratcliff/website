@@ -963,3 +963,94 @@ footer {
   line-height: 1.55;
   margin: 0;
 }
+
+/* ===== FLOATING HELP BUTTON ===== */
+.help-btn {
+  position: fixed;
+  bottom: 28px;
+  right: 28px;
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  background: var(--teal);
+  color: var(--white);
+  font-family: var(--font-heading);
+  font-size: 1.3rem;
+  font-weight: 700;
+  border: none;
+  cursor: pointer;
+  box-shadow: 0 4px 20px rgba(13,148,136,0.45);
+  z-index: 900;
+  transition: background 0.15s, transform 0.15s, box-shadow 0.15s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.help-btn:hover {
+  background: var(--teal-light);
+  transform: scale(1.08);
+  box-shadow: 0 6px 28px rgba(13,148,136,0.55);
+}
+
+.help-overlay {
+  position: fixed;
+  bottom: 92px;
+  right: 28px;
+  z-index: 901;
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(12px) scale(0.97);
+  transition: all 0.22s ease;
+}
+.help-overlay.open {
+  opacity: 1;
+  pointer-events: all;
+  transform: translateY(0) scale(1);
+}
+.help-panel {
+  background: var(--bg-card);
+  border: 1px solid var(--border-strong);
+  border-radius: 16px;
+  padding: 24px;
+  width: 300px;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+}
+.help-panel-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 18px;
+}
+.help-panel-title {
+  font-family: var(--font-heading);
+  font-weight: 700;
+  font-size: 0.95rem;
+  color: var(--white);
+}
+.help-panel-close {
+  background: none;
+  border: none;
+  color: var(--gray-500);
+  font-size: 1.3rem;
+  cursor: pointer;
+  line-height: 1;
+  padding: 0;
+  transition: color 0.15s;
+}
+.help-panel-close:hover { color: var(--white); }
+.help-link {
+  display: block;
+  padding: 11px 14px;
+  background: rgba(255,255,255,0.03);
+  border: 1px solid var(--border);
+  border-radius: 9px;
+  font-size: 0.83rem;
+  color: var(--gray-300);
+  text-decoration: none;
+  transition: border-color 0.15s, color 0.15s, background 0.15s;
+}
+.help-link:hover {
+  border-color: var(--teal-border);
+  color: var(--teal-light);
+  background: var(--teal-dim);
+}

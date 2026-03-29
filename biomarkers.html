@@ -248,8 +248,8 @@
       <a href="biomarkers.html" class="active">What We Test</a>
       <a href="membership.html">Membership</a>
       <a href="for-providers.html">For Providers</a>
-      <button onclick="openLoginModal()" class="btn btn-ghost" style="font-size:0.82rem;padding:8px 16px;">Login</button>
-      <a href="membership.html" class="btn btn-primary nav-cta">Get Started</a>
+      <a href="login.html" class="btn btn-ghost" style="font-size:0.82rem;padding:8px 16px;">Login</a>
+      <a href="signup.html" class="btn btn-primary nav-cta">Get Started</a>
     </div>
     <button class="nav-toggle" onclick="document.getElementById('navLinks').classList.toggle('open')" aria-label="Menu">
       <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
@@ -332,7 +332,7 @@
     <div class="eyebrow">Every marker. Every year.</div>
     <h2 style="margin-bottom:14px;">100+ biomarkers. One membership.</h2>
     <p class="lead" style="margin:0 auto 32px; max-width:460px; color:var(--gray-400);">$365/year — no add-ons, no à la carte pricing. All 50 states through Quest Diagnostics.</p>
-    <a href="membership.html" class="btn btn-primary btn-lg">View Membership Plans</a>
+    <a href="signup.html" class="btn btn-primary btn-lg">View Membership Plans</a>
   </div>
 </section>
 
@@ -487,6 +487,33 @@ function closeLoginModal(){document.getElementById('loginModal').classList.remov
 document.addEventListener('keydown',e=>{if(e.key==='Escape')closeLoginModal();});
 
 renderBiomarkers(biomarkers);
+</script>
+
+<!-- Floating Help Button -->
+<button class="help-btn" id="helpBtn" onclick="toggleHelp()" aria-label="Help">?</button>
+<div class="help-overlay" id="helpOverlay">
+  <div class="help-panel">
+    <div class="help-panel-header">
+      <span class="help-panel-title">How can we help?</span>
+      <button class="help-panel-close" onclick="toggleHelp()">&#215;</button>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:10px;margin-bottom:24px;">
+      <a href="how-it-works.html" class="help-link">How does Briella Health work?</a>
+      <a href="biomarkers.html" class="help-link">What biomarkers do you test?</a>
+      <a href="membership.html" class="help-link">What's included in my membership?</a>
+      <a href="membership.html#faq" class="help-link">Can I use my HSA or FSA?</a>
+      <a href="signup.html" class="help-link">Create a new account</a>
+    </div>
+    <div style="padding-top:16px;border-top:1px solid var(--border);text-align:center;">
+      <p style="font-size:0.82rem;color:var(--gray-400);margin-bottom:12px;">Still have a question?</p>
+      <a href="mailto:hello@briellahealth.com" class="btn btn-primary" style="width:100%;display:block;text-align:center;">Email Us</a>
+      <p style="font-size:0.75rem;color:var(--gray-600);margin-top:10px;">We typically respond within 1 business day.</p>
+    </div>
+  </div>
+</div>
+<script>
+function toggleHelp(){document.getElementById('helpOverlay').classList.toggle('open');}
+document.addEventListener('keydown',e=>{if(e.key==='Escape')document.getElementById('helpOverlay').classList.remove('open');});
 </script>
 </body>
 </html>

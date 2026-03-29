@@ -1,0 +1,550 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Briella Health — Member Signup</title>
+  <meta name="description" content="Join Briella Health. 100+ biomarkers tested annually through Quest Diagnostics. $365/year.">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <style>
+    body { background: var(--bg-dark); }
+
+    .signup-page {
+      min-height: 100vh;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+    }
+
+    /* ── Left panel ── */
+    .signup-left {
+      background: var(--bg-card);
+      border-right: 1px solid var(--border);
+      padding: 60px 56px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .signup-left::before {
+      content: '';
+      position: absolute;
+      top: -120px; left: -120px;
+      width: 400px; height: 400px;
+      background: radial-gradient(circle, rgba(13,148,136,0.12) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .signup-left-logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-family: var(--font-heading);
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: var(--white);
+      text-decoration: none;
+      margin-bottom: 56px;
+    }
+    .signup-left-logo .logo-mark {
+      width: 36px; height: 36px;
+      font-size: 1rem;
+    }
+    .signup-left-logo span { color: var(--teal-light); }
+    .signup-left h1 {
+      font-size: 2.2rem;
+      line-height: 1.2;
+      margin-bottom: 18px;
+    }
+    .signup-left h1 em {
+      font-style: normal;
+      color: var(--teal-light);
+    }
+    .signup-left .lead {
+      color: var(--gray-400);
+      font-size: 1rem;
+      margin-bottom: 44px;
+      line-height: 1.65;
+    }
+    .signup-benefits {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+    .signup-benefit {
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+    }
+    .signup-benefit-icon {
+      width: 28px; height: 28px;
+      border-radius: 50%;
+      background: var(--teal-dim);
+      border: 1px solid var(--teal-border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+    .signup-benefit-icon svg {
+      width: 14px; height: 14px;
+      stroke: var(--teal-light);
+    }
+    .signup-benefit-text strong {
+      display: block;
+      font-size: 0.88rem;
+      font-weight: 700;
+      color: var(--white);
+      margin-bottom: 2px;
+    }
+    .signup-benefit-text span {
+      font-size: 0.8rem;
+      color: var(--gray-500);
+      line-height: 1.4;
+    }
+    .signup-left-footer {
+      margin-top: 52px;
+      padding-top: 24px;
+      border-top: 1px solid var(--border);
+      font-size: 0.75rem;
+      color: var(--gray-600);
+      line-height: 1.6;
+    }
+
+    /* ── Right panel ── */
+    .signup-right {
+      padding: 60px 56px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      overflow-y: auto;
+    }
+    .signup-form-wrap {
+      max-width: 480px;
+      width: 100%;
+    }
+    .signup-form-header {
+      margin-bottom: 36px;
+    }
+    .signup-form-header h2 {
+      font-size: 1.8rem;
+      margin-bottom: 8px;
+    }
+    .signup-form-header p {
+      color: var(--gray-400);
+      font-size: 0.9rem;
+      margin: 0;
+    }
+    .signup-already {
+      font-size: 0.85rem;
+      color: var(--gray-500);
+      margin-top: 6px;
+    }
+    .signup-already a {
+      color: var(--teal-light);
+      text-decoration: none;
+      font-weight: 600;
+    }
+    .signup-already a:hover { text-decoration: underline; }
+
+    /* ── Form fields ── */
+    .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+    .form-grid.full { grid-template-columns: 1fr; }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      margin-bottom: 14px;
+    }
+    .form-group.span2 { grid-column: 1 / -1; }
+
+    .form-label {
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      color: var(--gray-400);
+    }
+    .form-input {
+      background: rgba(255,255,255,0.04);
+      border: 1px solid var(--border-strong);
+      border-radius: 9px;
+      padding: 13px 16px;
+      color: var(--white);
+      font-family: var(--font-body);
+      font-size: 0.92rem;
+      outline: none;
+      transition: border-color 0.15s, box-shadow 0.15s;
+      width: 100%;
+      box-sizing: border-box;
+    }
+    .form-input:focus {
+      border-color: var(--teal);
+      box-shadow: 0 0 0 3px rgba(13,148,136,0.12);
+    }
+    .form-input::placeholder { color: var(--gray-600); }
+    select.form-input {
+      appearance: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' fill='none' stroke='%236b7280' stroke-width='2' viewBox='0 0 24 24'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 14px center;
+      padding-right: 36px;
+      cursor: pointer;
+    }
+    select.form-input option { background: #1a2a3a; color: var(--white); }
+
+    /* ── Sex toggle ── */
+    .sex-toggle {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0;
+      border: 1px solid var(--border-strong);
+      border-radius: 9px;
+      overflow: hidden;
+    }
+    .sex-btn {
+      padding: 12px;
+      text-align: center;
+      font-family: var(--font-body);
+      font-size: 0.88rem;
+      font-weight: 600;
+      color: var(--gray-400);
+      cursor: pointer;
+      background: rgba(255,255,255,0.03);
+      border: none;
+      transition: all 0.15s;
+    }
+    .sex-btn:first-child { border-right: 1px solid var(--border-strong); }
+    .sex-btn.selected {
+      background: var(--teal-dim);
+      color: var(--teal-light);
+    }
+    .sex-btn:hover:not(.selected) {
+      background: rgba(255,255,255,0.06);
+      color: var(--white);
+    }
+
+    /* ── Agreements ── */
+    .agreements { display: flex; flex-direction: column; gap: 12px; margin: 20px 0 24px; }
+    .agreement-row {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      cursor: pointer;
+    }
+    .agreement-row input[type="checkbox"] {
+      width: 18px; height: 18px;
+      margin-top: 1px;
+      flex-shrink: 0;
+      accent-color: var(--teal);
+      cursor: pointer;
+    }
+    .agreement-label {
+      font-size: 0.82rem;
+      color: var(--gray-400);
+      line-height: 1.5;
+    }
+    .agreement-label a { color: var(--teal-light); text-decoration: none; }
+    .agreement-label a:hover { text-decoration: underline; }
+
+    /* ── Submit button ── */
+    .btn-signup {
+      width: 100%;
+      padding: 15px;
+      border-radius: 10px;
+      background: var(--teal);
+      color: var(--white);
+      font-family: var(--font-heading);
+      font-size: 1rem;
+      font-weight: 700;
+      border: none;
+      cursor: pointer;
+      transition: background 0.15s, transform 0.1s;
+      letter-spacing: 0.02em;
+    }
+    .btn-signup:hover { background: var(--teal-light); transform: translateY(-1px); }
+    .btn-signup:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
+
+    /* ── Divider ── */
+    .form-divider {
+      border: none;
+      border-top: 1px solid var(--border);
+      margin: 22px 0;
+    }
+
+    /* ── Success state ── */
+    .signup-success {
+      display: none;
+      text-align: center;
+      padding: 48px 0;
+    }
+    .success-check {
+      width: 64px; height: 64px;
+      border-radius: 50%;
+      background: var(--teal-dim);
+      border: 2px solid var(--teal);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 24px;
+    }
+    .success-check svg { stroke: var(--teal-light); width: 28px; height: 28px; }
+    .signup-success h3 { font-size: 1.5rem; margin-bottom: 12px; }
+    .signup-success p { color: var(--gray-400); font-size: 0.9rem; line-height: 1.6; margin-bottom: 28px; }
+
+    @media (max-width: 900px) {
+      .signup-page { grid-template-columns: 1fr; }
+      .signup-left { display: none; }
+      .signup-right { padding: 80px 28px 48px; }
+      .signup-form-wrap { max-width: 100%; }
+    }
+    @media (max-width: 500px) {
+      .form-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="signup-page">
+
+  <!-- ── LEFT PANEL ── -->
+  <div class="signup-left">
+    <a href="index.html" class="signup-left-logo">
+      <div class="logo-mark">B</div>
+      Briella <span>Health</span>
+    </a>
+
+    <h1>Your health,<br><em>finally complete.</em></h1>
+    <p class="lead">100+ biomarkers tested annually through Quest Diagnostics. Clear results, actionable insights, and physician-reviewed data — for less than $1 a day.</p>
+
+    <ul class="signup-benefits">
+      <li class="signup-benefit">
+        <div class="signup-benefit-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+        </div>
+        <div class="signup-benefit-text">
+          <strong>100+ biomarkers in one panel</strong>
+          <span>Cardiovascular, hormones, thyroid, metabolic, immune, nutrients, and more.</span>
+        </div>
+      </li>
+      <li class="signup-benefit">
+        <div class="signup-benefit-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+        </div>
+        <div class="signup-benefit-text">
+          <strong>Quest Diagnostics nationwide</strong>
+          <span>2,000+ draw locations. Book at a time that works for you.</span>
+        </div>
+      </li>
+      <li class="signup-benefit">
+        <div class="signup-benefit-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+        </div>
+        <div class="signup-benefit-text">
+          <strong>Results in 3–5 days</strong>
+          <span>Plain-language explanations, optimal ranges, and year-over-year tracking.</span>
+        </div>
+      </li>
+      <li class="signup-benefit">
+        <div class="signup-benefit-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+        </div>
+        <div class="signup-benefit-text">
+          <strong>$365/year — all-inclusive</strong>
+          <span>HSA/FSA eligible. No insurance required. No hidden fees.</span>
+        </div>
+      </li>
+    </ul>
+
+    <p class="signup-left-footer">Briella Health is a healthcare technology company. Lab services provided by independent CLIA-certified labs through Quest Diagnostics. Not a substitute for medical care.</p>
+  </div>
+
+  <!-- ── RIGHT PANEL ── -->
+  <div class="signup-right">
+    <div class="signup-form-wrap">
+
+      <div class="signup-form-header">
+        <h2>Member Signup</h2>
+        <p>It's time to own your health — from heart to hormones, thyroid to metabolism and beyond.</p>
+        <p class="signup-already">Already a member? <a href="login.html">Log in</a></p>
+      </div>
+
+      <!-- FORM -->
+      <form id="signupForm" onsubmit="handleSignup(event)" novalidate>
+
+        <div class="form-group" style="margin-bottom:18px;">
+          <label class="form-label" for="signupEmail">Email address</label>
+          <input class="form-input" type="email" id="signupEmail" name="email" placeholder="you@example.com" required>
+        </div>
+
+        <div class="form-grid">
+          <div class="form-group">
+            <label class="form-label" for="signupFirst">First name</label>
+            <input class="form-input" type="text" id="signupFirst" name="firstName" placeholder="First" required>
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="signupLast">Last name</label>
+            <input class="form-input" type="text" id="signupLast" name="lastName" placeholder="Last" required>
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="signupPhone">Phone number</label>
+            <input class="form-input" type="tel" id="signupPhone" name="phone" placeholder="+1 (555) 000-0000" required>
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="signupDOB">Date of birth</label>
+            <input class="form-input" type="date" id="signupDOB" name="dob" required>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Biological sex</label>
+          <div class="sex-toggle">
+            <button type="button" class="sex-btn" id="sexFemale" onclick="selectSex('female')">Female</button>
+            <button type="button" class="sex-btn" id="sexMale" onclick="selectSex('male')">Male</button>
+          </div>
+          <input type="hidden" id="sexValue" name="sex" value="">
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="signupState">Where will you be testing?</label>
+          <select class="form-input" id="signupState" name="state" required>
+            <option value="" disabled selected>Select your state</option>
+            <option>Alabama</option><option>Alaska</option><option>Arizona</option><option>Arkansas</option>
+            <option>California</option><option>Colorado</option><option>Connecticut</option><option>Delaware</option>
+            <option>Florida</option><option>Georgia</option><option>Hawaii</option><option>Idaho</option>
+            <option>Illinois</option><option>Indiana</option><option>Iowa</option><option>Kansas</option>
+            <option>Kentucky</option><option>Louisiana</option><option>Maine</option><option>Maryland</option>
+            <option>Massachusetts</option><option>Michigan</option><option>Minnesota</option><option>Mississippi</option>
+            <option>Missouri</option><option>Montana</option><option>Nebraska</option><option>Nevada</option>
+            <option>New Hampshire</option><option>New Jersey</option><option>New Mexico</option><option>New York</option>
+            <option>North Carolina</option><option>North Dakota</option><option>Ohio</option><option>Oklahoma</option>
+            <option>Oregon</option><option>Pennsylvania</option><option>Rhode Island</option><option>South Carolina</option>
+            <option>South Dakota</option><option selected>Texas</option><option>Utah</option><option>Vermont</option>
+            <option>Virginia</option><option>Washington</option><option>West Virginia</option><option>Wisconsin</option>
+            <option>Wyoming</option>
+          </select>
+        </div>
+
+        <hr class="form-divider">
+
+        <div class="agreements">
+          <label class="agreement-row">
+            <input type="checkbox" id="agreeTerms" required>
+            <span class="agreement-label">I agree to Briella Health's <a href="#">Terms of Service</a> and <a href="#">Privacy Policy</a>.</span>
+          </label>
+          <label class="agreement-row">
+            <input type="checkbox" id="agreeMedical" required>
+            <span class="agreement-label">I authorize Briella Health's affiliated medical practice to order laboratory tests on my behalf.</span>
+          </label>
+          <label class="agreement-row">
+            <input type="checkbox" id="agreeHIPAA" required>
+            <span class="agreement-label">I acknowledge Briella Health's <a href="#">HIPAA Notice of Privacy Practices</a> and <a href="#">Authorization for Use of Medical Information</a>.</span>
+          </label>
+        </div>
+
+        <button class="btn-signup" type="submit" id="submitBtn">Create My Account →</button>
+
+        <p style="font-size:0.75rem;color:var(--gray-600);text-align:center;margin-top:16px;line-height:1.6;">
+          Your name must match the ID you present at your lab visit. By creating an account you agree to receive important membership communications. HSA/FSA eligibility varies by plan.
+        </p>
+
+      </form>
+
+      <!-- SUCCESS STATE -->
+      <div class="signup-success" id="signupSuccess">
+        <div class="success-check">
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+        </div>
+        <h3>You're on the list.</h3>
+        <p>Thanks for signing up, <strong id="successName"></strong>. Briella Health is currently in pre-launch in Texas. We'll reach out to <strong id="successEmail"></strong> with next steps as soon as your membership is ready to activate.</p>
+        <a href="index.html" class="btn btn-primary">Back to Home</a>
+        <br><br>
+        <a href="biomarkers.html" style="font-size:0.88rem;color:var(--teal-light);text-decoration:none;">Explore what we test →</a>
+      </div>
+
+    </div>
+  </div>
+
+</div>
+
+<!-- Floating Help Button -->
+<button class="help-btn" id="helpBtn" onclick="toggleHelp()" aria-label="Help">?</button>
+<div class="help-overlay" id="helpOverlay">
+  <div class="help-panel">
+    <div class="help-panel-header">
+      <span class="help-panel-title">How can we help?</span>
+      <button class="help-panel-close" onclick="toggleHelp()">&#215;</button>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:10px;margin-bottom:24px;">
+      <a href="how-it-works.html" class="help-link">How does Briella Health work?</a>
+      <a href="biomarkers.html" class="help-link">What biomarkers do you test?</a>
+      <a href="membership.html" class="help-link">What's included in my membership?</a>
+      <a href="membership.html#faq" class="help-link">Can I use my HSA or FSA?</a>
+    </div>
+    <div style="padding-top:16px;border-top:1px solid var(--border);text-align:center;">
+      <p style="font-size:0.82rem;color:var(--gray-400);margin-bottom:12px;">Still have a question?</p>
+      <a href="mailto:hello@briellahealth.com" class="btn btn-primary" style="width:100%;display:block;text-align:center;">Email Us</a>
+      <p style="font-size:0.75rem;color:var(--gray-600);margin-top:10px;">We typically respond within 1 business day.</p>
+    </div>
+  </div>
+</div>
+
+<script>
+let selectedSex = '';
+
+function selectSex(val) {
+  selectedSex = val;
+  document.getElementById('sexValue').value = val;
+  document.getElementById('sexFemale').classList.toggle('selected', val === 'female');
+  document.getElementById('sexMale').classList.toggle('selected', val === 'male');
+}
+
+function handleSignup(e) {
+  e.preventDefault();
+  const btn = document.getElementById('submitBtn');
+
+  // Basic validation
+  const email = document.getElementById('signupEmail').value.trim();
+  const first = document.getElementById('signupFirst').value.trim();
+  const last = document.getElementById('signupLast').value.trim();
+  const phone = document.getElementById('signupPhone').value.trim();
+  const dob = document.getElementById('signupDOB').value;
+  const state = document.getElementById('signupState').value;
+  const terms = document.getElementById('agreeTerms').checked;
+  const medical = document.getElementById('agreeMedical').checked;
+  const hipaa = document.getElementById('agreeHIPAA').checked;
+
+  if (!email || !first || !last || !phone || !dob || !state || !selectedSex) {
+    alert('Please fill in all required fields.');
+    return;
+  }
+  if (!terms || !medical || !hipaa) {
+    alert('Please agree to all required terms to continue.');
+    return;
+  }
+
+  btn.disabled = true;
+  btn.textContent = 'Creating account…';
+
+  // Simulate submission (replace with real API/FormSpree endpoint)
+  setTimeout(() => {
+    document.getElementById('signupForm').style.display = 'none';
+    document.querySelector('.signup-form-header').style.display = 'none';
+    document.getElementById('successName').textContent = first;
+    document.getElementById('successEmail').textContent = email;
+    document.getElementById('signupSuccess').style.display = 'block';
+  }, 1200);
+}
+
+function toggleHelp() {
+  const overlay = document.getElementById('helpOverlay');
+  overlay.classList.toggle('open');
+}
+document.addEventListener('keydown', e => { if (e.key === 'Escape') document.getElementById('helpOverlay').classList.remove('open'); });
+</script>
+</body>
+</html>

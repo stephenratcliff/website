@@ -23,7 +23,7 @@
       <a href="biomarkers.html">What We Test</a>
       <a href="membership.html">Membership</a>
       <a href="for-providers.html" class="active">For Providers</a>
-      <button onclick="openLoginModal()" class="btn btn-ghost" style="font-size:0.82rem;padding:8px 16px;">Login</button>
+      <a href="login.html" class="btn btn-ghost" style="font-size:0.82rem;padding:8px 16px;">Login</a>
       <a href="#partner" class="btn btn-primary nav-cta">Partner With Us</a>
     </div>
     <button class="nav-toggle" onclick="document.getElementById('navLinks').classList.toggle('open')" aria-label="Menu">
@@ -321,6 +321,33 @@ function handlePartnerApply(e) {
   btn.style.background = '#22c55e';
   btn.disabled = true;
 }
+</script>
+
+<!-- Floating Help Button -->
+<button class="help-btn" id="helpBtn" onclick="toggleHelp()" aria-label="Help">?</button>
+<div class="help-overlay" id="helpOverlay">
+  <div class="help-panel">
+    <div class="help-panel-header">
+      <span class="help-panel-title">How can we help?</span>
+      <button class="help-panel-close" onclick="toggleHelp()">&#215;</button>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:10px;margin-bottom:24px;">
+      <a href="how-it-works.html" class="help-link">How does Briella Health work?</a>
+      <a href="biomarkers.html" class="help-link">What biomarkers do you test?</a>
+      <a href="membership.html" class="help-link">What's included in my membership?</a>
+      <a href="membership.html#faq" class="help-link">Can I use my HSA or FSA?</a>
+      <a href="signup.html" class="help-link">Create a new account</a>
+    </div>
+    <div style="padding-top:16px;border-top:1px solid var(--border);text-align:center;">
+      <p style="font-size:0.82rem;color:var(--gray-400);margin-bottom:12px;">Still have a question?</p>
+      <a href="mailto:hello@briellahealth.com" class="btn btn-primary" style="width:100%;display:block;text-align:center;">Email Us</a>
+      <p style="font-size:0.75rem;color:var(--gray-600);margin-top:10px;">We typically respond within 1 business day.</p>
+    </div>
+  </div>
+</div>
+<script>
+function toggleHelp(){document.getElementById('helpOverlay').classList.toggle('open');}
+document.addEventListener('keydown',e=>{if(e.key==='Escape')document.getElementById('helpOverlay').classList.remove('open');});
 </script>
 </body>
 </html>

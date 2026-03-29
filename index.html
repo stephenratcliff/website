@@ -23,8 +23,8 @@
       <a href="biomarkers.html">What We Test</a>
       <a href="membership.html">Membership</a>
       <a href="for-providers.html">For Providers</a>
-      <button onclick="openLoginModal()" class="btn btn-ghost" style="font-size:0.82rem;padding:8px 16px;">Login</button>
-      <a href="#waitlist" class="btn btn-primary nav-cta">Get Started</a>
+      <a href="login.html" class="btn btn-ghost" style="font-size:0.82rem;padding:8px 16px;">Login</a>
+      <a href="signup.html" class="btn btn-primary nav-cta">Get Started</a>
     </div>
     <button class="nav-toggle" onclick="document.getElementById('navLinks').classList.toggle('open')" aria-label="Menu">
       <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
@@ -60,7 +60,7 @@
         <h1>Know every number<br><em>that matters.</em></h1>
         <p class="lead">100+ biomarkers tested annually through Quest Diagnostics. Clear results. Actionable insights. One membership covers everything — for less than $1 a day.</p>
         <div class="hero-actions">
-          <a href="#waitlist" class="btn btn-primary btn-lg">Join the Waitlist</a>
+          <a href="signup.html" class="btn btn-primary btn-lg">Join the Waitlist</a>
           <a href="how-it-works.html" class="btn btn-outline btn-lg">How It Works</a>
         </div>
         <div class="hero-trust">
@@ -552,18 +552,18 @@
   </div>
 </section>
 
-<!-- ===== WAITLIST CTA ===== -->
+<!-- ===== SIGNUP CTA ===== -->
 <section class="section" id="waitlist">
   <div class="container">
     <div class="cta-band">
-      <div class="eyebrow">Launching Soon</div>
+      <div class="eyebrow">Now Enrolling</div>
       <h2>Be among the first<br>to know your numbers.</h2>
-      <p>Join the waitlist for early access, founding member pricing, and priority scheduling when we launch.</p>
-      <form class="waitlist-form" onsubmit="handleWaitlist(event)">
-        <input type="email" class="waitlist-input" placeholder="Enter your email address" required id="waitlistEmail">
-        <button type="submit" class="btn btn-primary btn-lg">Join the Waitlist</button>
-      </form>
-      <p class="cta-note">No spam. Unsubscribe anytime. Founding members receive priority access and exclusive pricing.</p>
+      <p>Join as a founding member — early access, priority scheduling, and exclusive founding pricing when we launch in Texas.</p>
+      <div style="display:flex;gap:14px;justify-content:center;flex-wrap:wrap;margin-top:8px;">
+        <a href="signup.html" class="btn btn-primary btn-lg">Create My Account</a>
+        <a href="biomarkers.html" class="btn btn-outline btn-lg">See What We Test</a>
+      </div>
+      <p class="cta-note">$365/year · 100+ biomarkers · HSA/FSA eligible · No insurance required</p>
     </div>
   </div>
 </section>
@@ -701,5 +701,32 @@ function closeLoginModal() { document.getElementById('loginModal').classList.rem
 document.addEventListener('keydown', e => { if(e.key==='Escape') closeLoginModal(); });
 </script>
 
+
+<!-- Floating Help Button -->
+<button class="help-btn" id="helpBtn" onclick="toggleHelp()" aria-label="Help">?</button>
+<div class="help-overlay" id="helpOverlay">
+  <div class="help-panel">
+    <div class="help-panel-header">
+      <span class="help-panel-title">How can we help?</span>
+      <button class="help-panel-close" onclick="toggleHelp()">&#215;</button>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:10px;margin-bottom:24px;">
+      <a href="how-it-works.html" class="help-link">How does Briella Health work?</a>
+      <a href="biomarkers.html" class="help-link">What biomarkers do you test?</a>
+      <a href="membership.html" class="help-link">What's included in my membership?</a>
+      <a href="membership.html#faq" class="help-link">Can I use my HSA or FSA?</a>
+      <a href="signup.html" class="help-link">Create a new account</a>
+    </div>
+    <div style="padding-top:16px;border-top:1px solid var(--border);text-align:center;">
+      <p style="font-size:0.82rem;color:var(--gray-400);margin-bottom:12px;">Still have a question?</p>
+      <a href="mailto:hello@briellahealth.com" class="btn btn-primary" style="width:100%;display:block;text-align:center;">Email Us</a>
+      <p style="font-size:0.75rem;color:var(--gray-600);margin-top:10px;">We typically respond within 1 business day.</p>
+    </div>
+  </div>
+</div>
+<script>
+function toggleHelp(){document.getElementById('helpOverlay').classList.toggle('open');}
+document.addEventListener('keydown',e=>{if(e.key==='Escape')document.getElementById('helpOverlay').classList.remove('open');});
+</script>
 </body>
 </html>
