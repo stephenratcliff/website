@@ -22,7 +22,10 @@
       <a href="how-it-works.html">How It Works</a>
       <a href="biomarkers.html">What We Test</a>
       <a href="membership.html" class="active">Membership</a>
-      <a href="index.html#waitlist" class="btn btn-primary nav-cta">Join the Waitlist</a>
+      <a href="for-providers.html">For Providers</a>
+      <a href="blog.html">Journal</a>
+      <a href="login.html" class="btn btn-ghost" style="font-size:0.82rem;padding:8px 16px;">Login</a>
+      <a href="signup.html" class="btn btn-primary nav-cta">Get Started</a>
     </div>
     <button class="nav-toggle" onclick="document.getElementById('navLinks').classList.toggle('open')" aria-label="Menu">
       <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
@@ -110,7 +113,7 @@
             <span><strong>HIPAA-secure platform</strong> — your health data is private and protected</span>
           </div>
         </div>
-        <a href="index.html#waitlist" class="btn btn-primary pricing-cta">Join the Waitlist</a>
+        <a href="signup.html" class="btn btn-primary pricing-cta">Join the Waitlist</a>
       </div>
 
       <!-- Practice / B2B -->
@@ -151,7 +154,7 @@
             <span>Dedicated partner support</span>
           </div>
         </div>
-        <a href="index.html#waitlist" class="btn btn-outline pricing-cta">Contact Us for Partner Pricing</a>
+        <a href="signup.html" class="btn btn-outline pricing-cta">Contact Us for Partner Pricing</a>
       </div>
 
     </div>
@@ -362,31 +365,60 @@ document.addEventListener('keydown', e => { if(e.key==='Escape') closeLoginModal
 <\/script>
 
 
-<!-- Floating Help Button -->
-<button class="help-btn" id="helpBtn" onclick="toggleHelp()" aria-label="Help">?</button>
+
+<!-- ===== FLOATING HELP ===== -->
+<style>
+/* ===== HELP BUTTON (inline) ===== */
+.help-btn{position:fixed;bottom:28px;right:28px;width:52px;height:52px;border-radius:50%;background:#0d9488;color:#fff;border:none;cursor:pointer;box-shadow:0 4px 20px rgba(13,148,136,0.45);z-index:9000;transition:background .15s,transform .15s;display:flex;align-items:center;justify-content:center;}
+.help-btn:hover{background:#14b8b3;transform:scale(1.08);}
+.help-overlay{position:fixed;bottom:92px;right:28px;z-index:9001;opacity:0;pointer-events:none;transform:translateY(12px) scale(.97);transition:all .22s ease;width:300px;}
+.help-overlay.open{opacity:1;pointer-events:all;transform:translateY(0) scale(1);}
+.help-panel{background:#111f2e;border:1px solid rgba(255,255,255,0.12);border-radius:16px;padding:24px;box-shadow:0 20px 60px rgba(0,0,0,.55);}
+.help-panel-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;}
+.help-panel-title{font-weight:700;font-size:.95rem;color:#fff;}
+.help-panel-close{background:none;border:none;color:#6b7280;font-size:1.4rem;cursor:pointer;line-height:1;padding:0;}
+.help-panel-close:hover{color:#fff;}
+.help-links-list{display:flex;flex-direction:column;gap:8px;margin-bottom:20px;}
+.help-link{display:block;padding:10px 14px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:9px;font-size:.82rem;color:#d1d5db;text-decoration:none;transition:all .15s;}
+.help-link:hover{border-color:rgba(13,148,136,0.4);color:#14b8b3;background:rgba(13,148,136,0.08);}
+.help-divider{border:none;border-top:1px solid rgba(255,255,255,0.07);margin:16px 0;}
+.help-email-btn{display:block;width:100%;padding:11px;border-radius:9px;background:#0d9488;color:#fff;text-align:center;text-decoration:none;font-weight:700;font-size:.85rem;transition:background .15s;}
+.help-email-btn:hover{background:#14b8b3;}
+</style>
+<button class="help-btn" onclick="toggleHelpPanel()" aria-label="Chat with us">
+  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+  </svg>
+</button>
 <div class="help-overlay" id="helpOverlay">
   <div class="help-panel">
     <div class="help-panel-header">
       <span class="help-panel-title">How can we help?</span>
-      <button class="help-panel-close" onclick="toggleHelp()">&#215;</button>
+      <button class="help-panel-close" onclick="toggleHelpPanel()">&#215;</button>
     </div>
-    <div style="display:flex;flex-direction:column;gap:10px;margin-bottom:24px;">
+    <div class="help-links-list">
       <a href="how-it-works.html" class="help-link">How does Briella Health work?</a>
       <a href="biomarkers.html" class="help-link">What biomarkers do you test?</a>
-      <a href="membership.html" class="help-link">What's included in my membership?</a>
-      <a href="membership.html#faq" class="help-link">Can I use my HSA or FSA?</a>
+      <a href="membership.html" class="help-link">What&#39;s included in my membership?</a>
+      <a href="membership.html" class="help-link">Can I use my HSA or FSA?</a>
       <a href="signup.html" class="help-link">Create a new account</a>
+      <a href="login.html" class="help-link">Log in to my account</a>
     </div>
-    <div style="padding-top:16px;border-top:1px solid var(--border);text-align:center;">
-      <p style="font-size:0.82rem;color:var(--gray-400);margin-bottom:12px;">Still have a question?</p>
-      <a href="mailto:hello@briellahealth.com" class="btn btn-primary" style="width:100%;display:block;text-align:center;">Email Us</a>
-      <p style="font-size:0.75rem;color:var(--gray-600);margin-top:10px;">We typically respond within 1 business day.</p>
-    </div>
+    <hr class="help-divider">
+    <p style="font-size:.78rem;color:#9ca3af;text-align:center;margin-bottom:12px;">Still have a question?</p>
+    <a href="mailto:hello@briellahealth.com" class="help-email-btn">Email Us</a>
+    <p style="font-size:.72rem;color:#6b7280;text-align:center;margin-top:10px;">We typically respond within 1 business day.</p>
   </div>
 </div>
 <script>
-function toggleHelp(){document.getElementById('helpOverlay').classList.toggle('open');}
-document.addEventListener('keydown',e=>{if(e.key==='Escape')document.getElementById('helpOverlay').classList.remove('open');});
+(function(){
+  function toggleHelpPanel(){
+    var o=document.getElementById('helpOverlay');
+    if(o) o.classList.toggle('open');
+  }
+  window.toggleHelpPanel=toggleHelpPanel;
+  document.addEventListener('keydown',function(e){if(e.key==='Escape'){var o=document.getElementById('helpOverlay');if(o)o.classList.remove('open');}});
+})();
 </script>
 </body>
 </html>
